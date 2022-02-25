@@ -3,7 +3,7 @@ import { AppService } from './app.service';
 
 @Controller('api')
 export class AppContoller {
-
+  
   constructor(private appService: AppService) {}
 
   @Get()
