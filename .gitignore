@@ -33,3 +33,9 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# hiding configuration data
+/src/config
+
+# hiding design porject
+/src/structure.drawio
