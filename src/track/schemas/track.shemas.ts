@@ -7,21 +7,13 @@ export type TrackDocument = Track & Document;
 export class Track {
   @Prop()
   name: string;
-
+  
   @Prop()
   artist: string;
 
   @Prop()
-  picture: string;
-
-  @Prop()
-  audio: string;
-
-  @Prop()
   listens: number;
 
-  @Prop()
-  commnets: string;
 }
 
 export const TrackSchema = SchemaFactory.createForClass(Track);
