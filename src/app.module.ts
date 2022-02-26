@@ -5,8 +5,15 @@ import { MongooseModule } from '@nestjs/mongoose';
 import link from './config/link';
 import { AppService } from './app.service';
 import { AppContoller } from './app.controller';
+import * as path from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 @Module({
- imports: [MongooseModule.forRoot(link.url), TrackModule, FileModule],
+ imports: [
+  ServeStaticModule.forRoot({rootPath: path.resolve(__dirname, 'static'),}),
+  MongooseModule.forRoot(link.url), 
+  TrackModule, 
+  FileModule,
+],
  controllers: [AppContoller],
  providers: [AppService],
 })
