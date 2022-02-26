@@ -44,4 +44,42 @@ describe('TrackController', () => {
       });
     });
   });
+
+  describe('getTracks', () => {
+    describe('when createTracks is called', () => {
+      let tracks: Track[];
+
+      beforeEach(async () => {
+        tracks = await trackController.getTracks();
+      });
+      test('then it should call at least once', () => {
+        expect(trackService.getTracks).toHaveBeenCalled();
+      });
+      test('then it should return tracks', () => {
+        expect(tracks).toEqual([trackStub()]);
+      });
+    });
+  });
+
+  //when testing, include the _id field in the track scheme
+  
+  /*describe('getTrack', () => {
+    describe('when createTrack is called', () => {
+      let track: Track;
+
+      beforeEach(async () => {
+        track = await trackController.getTrackById(trackStub()._id);
+      });
+      test('then it should call at least once', () => {
+        expect(trackService.getTrackById).toHaveBeenCalled();
+      });
+      test('then it should call with id', () => {
+        expect(trackService.getTrackById).toBeCalledWith(trackStub()._id);
+      });
+      test('then it should return tracks', () => {
+        expect(track).toEqual(trackStub());
+      });
+    });
+  });*/
+
 });
