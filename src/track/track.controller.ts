@@ -1,7 +1,7 @@
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { UpdateTrackDTO } from './dto/update-track.dto';
 import { ObjectId } from 'mongodb';
-import { Controller, Get, Post, Body, Param, Patch, Delete, UseInterceptors, UploadedFiles } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, Param, Patch, Delete, UseInterceptors, UploadedFiles } from '@nestjs/common';
 import { CreateTrackDTO } from './dto/create-track.dto';
 import { Track } from './schemas/track.shemas';
 import { TrackService } from './track.service';
@@ -19,8 +19,8 @@ export class TrackController {
   }
 
   @Get()
-  getTracks(): Promise<Track[]> {
-    return this.trackService.getTracks();
+  getTracks(@Query('count') count: number, @Query('offset') offset: number): Promise<Track[]> {
+    return this.trackService.getTracks(count, offset);
   }
   @Get(':trackId')
   getTrackById(@Param('trackId') trackId: ObjectId): Promise<Track> {
