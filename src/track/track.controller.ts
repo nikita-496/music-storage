@@ -1,6 +1,7 @@
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { UpdateTrackDTO } from './dto/update-track.dto';
 import { ObjectId } from 'mongodb';
-import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch, Delete, UseInterceptors, UploadedFiles } from '@nestjs/common';
 import { CreateTrackDTO } from './dto/create-track.dto';
 import { Track } from './schemas/track.shemas';
 import { TrackService } from './track.service';
@@ -8,8 +9,13 @@ import { TrackService } from './track.service';
 export class TrackController {
   constructor(private trackService: TrackService) {}
   @Post()
-  async createTrack(@Body() dto: CreateTrackDTO): Promise<Track> {
-    return this.trackService.createTrack(dto);
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: 'audio', maxCount: 1 },
+    { name: 'picture', maxCount: 1 },
+  ]))
+  async createTrack( @UploadedFiles() files, @Body() dto: CreateTrackDTO): Promise<Track> {
+    const { audio, picture } = files
+    return this.trackService.createTrack(dto, audio[0], picture[0]);
   }
 
   @Get()

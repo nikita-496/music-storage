@@ -14,6 +14,12 @@ export class Track {
   @Prop()
   listens: number;
 
+  @Prop()
+  audio: string;
+
+  @Prop()
+  picture: string;
+
 }
 
 export const TrackSchema = SchemaFactory.createForClass(Track);

@@ -1,3 +1,4 @@
+import { FileService, FileType } from './../file/file.service';
 import { UpdateTrackDTO } from './dto/update-track.dto';
 import { ObjectId } from 'mongodb';
 import { Track, TrackDocument } from './schemas/track.shemas';
@@ -5,15 +6,21 @@ import { CreateTrackDTO } from './dto/create-track.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+
 @Injectable()
 export class TrackService {
-  constructor(@InjectModel(Track.name) private trackModel: Model<TrackDocument>){}
+  constructor(
+    @InjectModel(Track.name) private trackModel: Model<TrackDocument>,
+    private fileService: FileService,
+  ){}
 
   private readonly track: Track;
-  async createTrack(dto: CreateTrackDTO): Promise<Track> {
+  async createTrack(dto: CreateTrackDTO, audio, picture): Promise<Track> {
     /*const track = await this.trackModel.create({ ...dto, listens: 0 });
     return track;*/
-    return this.trackModel.create({ ...dto, listens: 0 });
+    const audioPath = this.fileService.createFile(FileType.AUDIO, audio);
+    const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
+    return this.trackModel.create({ ...dto, listens: 0, audio: audioPath, picture: picturePath });
   }
   async getTracks(): Promise<Track[]> {
     return await this.trackModel.find();
