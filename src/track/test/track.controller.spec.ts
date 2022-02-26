@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { UpdateTrackDTO } from './../dto/update-track.dto';
 import { Track } from '../schemas/track.shemas';
 import { trackStub } from './stubs/track.stub';
@@ -47,7 +48,7 @@ describe('TrackController', () => {
   });
 
   describe('getTracks', () => {
-    describe('when createTracks is called', () => {
+    describe('when getTracks is called', () => {
       let tracks: Track[];
 
       beforeEach(async () => {
@@ -63,7 +64,7 @@ describe('TrackController', () => {
     });
   });
 
-  //WHEN TESTING getTrackById and (or) updateTrack, INCLUDE THE _id FIELD IN THE TRACK SCHEME
+  //WHEN TESTING getTrackById, updateTrack, deleteTrack, INCLUDE THE _id FIELD IN THE TRACK SCHEME
   /*describe('getTrack', () => {
     describe('when createTrack is called', () => {
       let track: Track;
@@ -106,6 +107,26 @@ describe('TrackController', () => {
       });
       test('then it should return a track', () => {
         expect(track).toEqual(trackStub());
+      });
+    });
+  });*/
+
+  /*describe('deleteTrack', () => {
+    describe('when deleteTrack is called', () => {
+      let id: ObjectId;
+
+      beforeEach(async () => {
+        id = await trackController.deleteTrack(trackStub()._id);
+      });
+
+      test('then it should call at least once', () => {
+        expect(trackService.deleteTrack).toHaveBeenCalled();
+      });
+      test('then it should call with id', () => {
+        expect(trackService.deleteTrack).toHaveBeenCalledWith(trackStub()._id);
+       });
+      test('then it should return id', () => {
+        expect(id).toEqual(trackStub()._id);
       });
     });
   });*/

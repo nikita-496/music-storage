@@ -13,14 +13,18 @@ export class TrackService {
     return this.trackModel.create({ ...dto, listens: 0 });
   }
   async getTracks(): Promise<Track[]> {
-    return this.trackModel.find();
+    return await this.trackModel.find();
   }
 
   async getTrackById(trackId: ObjectId): Promise<Track> {
-    return this.trackModel.findById(trackId);
+    return await this.trackModel.findById(trackId);
   }
 
   async updateTrack(trackId: ObjectId, dto: UpdateTrackDTO): Promise<Track> {
-    return this.trackModel.findOneAndUpdate({ trackId }, dto);
+    return await this.trackModel.findOneAndUpdate({ trackId }, dto);
+  } 
+
+  async deleteTrack(trackId: ObjectId): Promise<ObjectId> {
+    return (await this.trackModel.findByIdAndDelete(trackId))._id;
   } 
 }
