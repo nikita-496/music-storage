@@ -37,4 +37,10 @@ export class TrackService {
   async deleteTrack(trackId: ObjectId): Promise<ObjectId> {
     return (await this.trackModel.findByIdAndDelete(trackId))._id;
   } 
+
+  async listen(trackId: ObjectId) {
+    const track = await this.trackModel.findById(trackId);
+    track.listens++;
+    track.save();
+  }
 }

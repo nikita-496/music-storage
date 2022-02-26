@@ -36,4 +36,9 @@ export class TrackController {
   deleteTrack(@Param('trackId') trackId: ObjectId): Promise<ObjectId> {
     return this.trackService.deleteTrack(trackId);
   }
+
+  @Post('/listen/:trackId')
+  listen(@Param('trackId') trackId: ObjectId) {
+    return this.trackService.listen(trackId);
+  }
 }
