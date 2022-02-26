@@ -1,3 +1,4 @@
+import { UpdateTrackDTO } from './dto/update-track.dto';
 import { ObjectId } from 'mongodb';
 import { Track, TrackDocument } from './schemas/track.shemas';
 import { CreateTrackDTO } from './dto/create-track.dto';
@@ -18,4 +19,8 @@ export class TrackService {
   async getTrackById(trackId: ObjectId): Promise<Track> {
     return this.trackModel.findById(trackId);
   }
+
+  async updateTrack(trackId: ObjectId, dto: UpdateTrackDTO): Promise<Track> {
+    return this.trackModel.findOneAndUpdate({ trackId }, dto);
+  } 
 }

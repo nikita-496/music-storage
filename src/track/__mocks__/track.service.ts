@@ -5,4 +5,5 @@ TrackService.mockReturnValue({
   createTrack: jest.fn().mockResolvedValue(trackStub()),
   getTracks: jest.fn().mockResolvedValue([trackStub()]),
   getTrackById: jest.fn().mockResolvedValue(trackStub()),
+  updateTrack: jest.fn().mockResolvedValue(trackStub()),
 });

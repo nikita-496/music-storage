@@ -1,3 +1,4 @@
+import { UpdateTrackDTO } from './../dto/update-track.dto';
 import { Track } from '../schemas/track.shemas';
 import { trackStub } from './stubs/track.stub';
 import { TrackService } from './../track.service';
@@ -52,6 +53,7 @@ describe('TrackController', () => {
       beforeEach(async () => {
         tracks = await trackController.getTracks();
       });
+
       test('then it should call at least once', () => {
         expect(trackService.getTracks).toHaveBeenCalled();
       });
@@ -61,8 +63,7 @@ describe('TrackController', () => {
     });
   });
 
-  //when testing, include the _id field in the track scheme
-  
+  //WHEN TESTING getTrackById and (or) updateTrack, INCLUDE THE _id FIELD IN THE TRACK SCHEME
   /*describe('getTrack', () => {
     describe('when createTrack is called', () => {
       let track: Track;
@@ -70,6 +71,7 @@ describe('TrackController', () => {
       beforeEach(async () => {
         track = await trackController.getTrackById(trackStub()._id);
       });
+
       test('then it should call at least once', () => {
         expect(trackService.getTrackById).toHaveBeenCalled();
       });
@@ -82,4 +84,29 @@ describe('TrackController', () => {
     });
   });*/
 
+  /*describe('updateTrack', () => {
+    describe('when updateTrack is called', () => {
+      let track: Track;
+      let updateTrackDto: UpdateTrackDTO;
+
+      beforeEach(async () => {
+        updateTrackDto = {
+          name: 'Track1',
+          artist: 'Artist1',
+          listens: 5,
+        };
+        track = await trackController.updateTrack(trackStub()._id, updateTrackDto);
+      });
+
+      test('then it should call at least once', () => {
+        expect(trackService.updateTrack).toHaveBeenCalled();
+      });
+      test('then it should call with parameters id and dto', () => {
+       expect(trackService.updateTrack).toHaveBeenCalledWith(trackStub()._id, updateTrackDto);
+      });
+      test('then it should return a track', () => {
+        expect(track).toEqual(trackStub());
+      });
+    });
+  });*/
 });

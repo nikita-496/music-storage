@@ -1,5 +1,6 @@
+import { UpdateTrackDTO } from './dto/update-track.dto';
 import { ObjectId } from 'mongodb';
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
 import { CreateTrackDTO } from './dto/create-track.dto';
 import { Track } from './schemas/track.shemas';
 import { TrackService } from './track.service';
@@ -10,6 +11,7 @@ export class TrackController {
   createTrack(@Body() dto: CreateTrackDTO): Promise<Track> {
     return this.trackService.createTrack(dto);
   }
+
   @Get()
   getTracks(): Promise<Track[]> {
     return this.trackService.getTracks();
@@ -17,5 +19,10 @@ export class TrackController {
   @Get(':trackId')
   getTrackById(@Param('trackId') trackId: ObjectId): Promise<Track> {
     return this.trackService.getTrackById(trackId);
+  }
+
+  @Patch(':trackId')
+  updateTrack(@Param('trackId') trackId: ObjectId, @Body() dto: UpdateTrackDTO): Promise<Track> {
+    return this.trackService.updateTrack(trackId, dto);
   }
 }
