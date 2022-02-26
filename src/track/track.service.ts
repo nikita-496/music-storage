@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { Track, TrackDocument } from './schemas/track.shemas';
 import { CreateTrackDTO } from './dto/create-track.dto';
 import { Injectable } from '@nestjs/common';
@@ -13,5 +14,12 @@ export class TrackService {
     /*const track = await this.trackModel.create({ ...dto, listens: 0 });
     return track;*/
     return this.trackModel.create({ ...dto, listens: 0 });
+  }
+  async getTracks(): Promise<Track[]> {
+    return await this.trackModel.find();
+  }
+
+  async getTrackById(trackId: ObjectId): Promise<Track> {
+    return await this.trackModel.findById(trackId);
   }
 }
