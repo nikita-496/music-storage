@@ -1,11 +1,13 @@
-export default {
-  // Target: https://go.nuxtjs.dev/config-target
-  target: "static",
+import bootstrap from "./.nest/nest.js";
+
+const isDev = process.env.NODE_ENV === "development";
+
+const config = async () => ({
   srcDir: "client/",
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "music-storage",
+    title: "nuxtjs-nestjs-integration",
     htmlAttrs: {
       lang: "en",
     },
@@ -13,10 +15,11 @@ export default {
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: "" },
-      { name: "format-detection", content: "telephone=no" },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
+
+  serverMiddleware: isDev ? [] : [{ path: "/api", handler: await bootstrap() }],
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
@@ -41,10 +44,11 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: "http://localhost:4000/api",
+    baseURL: isDev ? "http://localhost:4000/api" : "http://localhost:3000/api",
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-};
+});
+
+export default config;
