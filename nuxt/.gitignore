@@ -88,3 +88,10 @@ sw.*
 
 # Vim swap files
 *.swp
+
+// .gitignore
+coverage-client
+coverage-server
+
+# nest.js build output
+.nest
