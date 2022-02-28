@@ -95,3 +95,6 @@ coverage-server
 
 # nest.js build output
 .nest
+
+# hiding configuration data
+/server/src/config

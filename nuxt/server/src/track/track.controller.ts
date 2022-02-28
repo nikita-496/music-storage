@@ -5,7 +5,7 @@ import { Controller, Get, Post, Body, Query, Param, Patch, Delete, UseIntercepto
 import { CreateTrackDTO } from './dto/create-track.dto';
 import { Track } from './schemas/track.shemas';
 import { TrackService } from './track.service';
-@Controller('track')
+@Controller('tracks')
 export class TrackController {
   constructor(private trackService: TrackService) {}
   @Post()
