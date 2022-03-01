@@ -39,7 +39,7 @@
       "@nuxtjs/axios",
       "@types/node",
       "@types/jest",
-      "@types/supertest"
+      "@types/supertest",
     ]
   },
   "exclude": [

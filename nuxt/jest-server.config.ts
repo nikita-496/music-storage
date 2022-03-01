@@ -2,10 +2,11 @@ module.exports = {
   globals: {
     "ts-jest": {
       tsConfig: "./tsconfig-server.json",
+      diagnostics: true,
     },
   },
   moduleFileExtensions: ["js", "json", "ts"],
-  rootDir: "server",
+  rootDir: ".",
   testRegex: ".*\\.spec\\.ts$",
   transform: {
     "^.+\\.(t|j)s$": "ts-jest",
