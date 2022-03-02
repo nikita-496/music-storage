@@ -1,13 +1,10 @@
 {
-  "extends": "./tsconfig",
+  "extends": "./tsconfig-server.json",
   "exclude": [
     "node_modules",
     ".nuxt",
     ".nest",
     "client",
-    "**/*.spec.*", 
-    "**/__mocks__/*", 
-    "**/tests/*",
     "**/*spec.ts"
   ]
 }
