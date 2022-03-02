@@ -1,11 +1,13 @@
 <template>
-  <Tutorial/>
+  <div>
+   <admin-editor>
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import AdminEditor from '../components/input/AdminEditor.vue';
+export default {
+  components: { AdminEditor },
 
-export default Vue.extend({
-  name: 'IndexPage'
-})
+};
 </script>
