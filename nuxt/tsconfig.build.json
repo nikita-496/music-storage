@@ -5,8 +5,8 @@
     ".nuxt",
     ".nest",
     "client",
-    "**/__mocks__/*", 
-    "**/test/*",
-    "**/*spec.ts"
+    "server/src/**/*__mocks__",
+    "server/src/**/*__tests__",
+    "**/*spec.ts",
   ]
 }
