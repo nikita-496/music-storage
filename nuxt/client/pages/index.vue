@@ -1,11 +1,14 @@
 <template>
-  <Tutorial/>
+  <div>
+    <admin-editor />
+    <nav-bar />
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({
-  name: 'IndexPage'
-})
+import AdminEditor from "../components/form/AdminEditor.vue";
+import NavBar from "../components/NavBar.vue";
+export default {
+  components: { AdminEditor, NavBar },
+};
 </script>
