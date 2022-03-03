@@ -9,7 +9,7 @@ export class Content {
   title: string;
   
   @Prop()
-  text: string;
+  text: string | string[];
 
   @Prop()
   picture: string;
