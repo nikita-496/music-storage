@@ -1,5 +1,5 @@
 <template>
-  <form action="admin-editor" @submit.prevent>
+  <form method="post" @submit.prevent="send">
     <label class="admin-editor__label" for="titleInput"
       >Заголовок контента</label
     >
@@ -7,7 +7,7 @@
       class="admin-editor__input"
       type="text"
       id="titleInput"
-      v-model="title"
+      v-model="content.title"
     />
     <label class="admin-editor__label" for="textInput" ref="textAreaLabel">
       <br />Текст контента <br />
@@ -16,7 +16,7 @@
         type="text"
         name=""
         id="textInput"
-        v-model="text[0]"
+        v-model="content.text[0]"
       />
       <template v-if="textAreas.length">
         <textarea
@@ -26,61 +26,78 @@
           type="text"
           name=""
           id="textInput"
-          v-model="text[n]"
+          v-model="content.text[n]"
         />
       </template>
-      <button class="button admin-editor__button" @click="addTextArea">
-        +
-      </button>
-      <button class="button admin-editor__button" @click="removeTextArea">
-        -
-      </button>
+      <button class="btn admin-editor__btn" @click="addTextArea">+</button>
+      <button class="btn admin-editor__btn" @click="removeTextArea">-</button>
     </label>
-    <label class="admin-editor__label" for="file">Изображение контента</label>
-    <file-upload data-test="file-upload-component" @on-change-file="setFile">
-      <button @click.prevent>Загрузите изображение</button>
-    </file-upload>
-    <button class="button admin-editor__button" @click="send">Отправить</button>
+    <label class="admin-editor__label" for="file"
+      >Изображение контента
+      <file-upload
+        data-test="file-upload-component"
+        name="picture"
+        @on-change-file="setFile"
+      >
+        <button @click.prevent>Загрузите изображение</button>
+      </file-upload>
+    </label>
+
+    <button class="btn admin-editor__btn">Отправить</button>
   </form>
 </template>
 
 <script lang="ts">
 import FileUpload from '../FileUpload.vue';
-import { contentStub } from '../__tests__/stubs/content.stub';
+import ContentService from '../../service/ContentService';
 
-export default {
-  components: { FileUpload },
-  data() {
-    return {
-      title: '',
-      text: [],
-      textAreas: [],
-      picture: null,
-    };
+import { Component, Vue } from 'nuxt-property-decorator';
+
+interface ContentInterface {
+  title: string;
+  text: string[];
+  picture: object;
+}
+
+@Component({
+  components: {
+    FileUpload,
   },
+})
+export default class AdminEditor extends Vue {
+  private content: ContentInterface = {
+    title: '',
+    text: [],
+    picture: {},
+  };
+  private textAreas: any = [];
+
   mounted() {
     if (sessionStorage.getItem('textAreas')) {
       this.textAreas = sessionStorage.getItem('textAreas').split(',');
     }
-  },
-  methods: {
-    addTextArea() {
-      this.textAreas.push(this.textAreas.length + 1);
-      sessionStorage.setItem('textAreas', this.textAreas);
-    },
-    removeTextArea() {
-      this.textAreas.pop();
-      sessionStorage.setItem('textAreas', this.textAreas);
-    },
-    setFile(file) {
-      this.picture = file;
-    },
-    send() {
-      const sendContent = contentStub();
-      sendContent.title = this.title;
-      sendContent.text = this.text;
-      sendContent.picture = this.picture;
-    },
-  },
-};
+  }
+
+  public addTextArea() {
+    this.textAreas.push(this.textAreas.length + 1);
+    sessionStorage.setItem('textAreas', this.textAreas);
+  }
+
+  public removeTextArea() {
+    this.textAreas.pop();
+    sessionStorage.setItem('textAreas', this.textAreas);
+  }
+
+  public setFile(formData: {}) {
+    this.content.picture = formData;
+  }
+
+  public send() {
+    const formData = new FormData();
+    formData.append('title', this.content.title);
+    formData.append('text', JSON.stringify(this.content.text));
+    formData.append('picture', this.content.picture[0]);
+    ContentService.save(formData);
+  }
+}
 </script>

@@ -6,9 +6,13 @@
 </template>
 
 <script lang="ts">
-import AdminEditor from "../components/form/AdminEditor.vue";
-import NavBar from "../components/NavBar.vue";
-export default {
-  components: { AdminEditor, NavBar },
-};
+import { Component, Vue } from 'nuxt-property-decorator';
+import AdminEditor from '../components/form/AdminEditor.vue';
+
+@Component({
+  components: {
+    AdminEditor,
+  },
+})
+export default class Index extends Vue {}
 </script>
