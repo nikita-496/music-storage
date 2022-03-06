@@ -10,7 +10,7 @@
     "generate": "nuxt generate",
     "format": "prettier --write \"server/**/*.ts\" \"client/**/*.(js|ts|vue)\"",
     "test": "npm run test:client && npm run test:server",
-    "test:client": "jest",
+    "test:client": "jest --watch",
     "test:server": "jest --config ./jest-server.config.js"
   },
   "dependencies": {
@@ -20,6 +20,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/serve-static": "^2.2.2",
     "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/proxy": "^2.1.0",
     "core-js": "^3.19.3",
     "mongoose": "^6.2.3",
     "nuxt": "^2.15.8",
