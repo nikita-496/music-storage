@@ -16,7 +16,7 @@ export class ContentService {
   private readonly content: Content;
 
   async createContent(dto: CreateContentDTO, picture): Promise<Content> {
-    const picturePath = this.fileService.createFile(FileType.IMAGE,picture)
+    const picturePath = await this.fileService.createFile(FileType.IMAGE, picture)
     return this.contentModel.create({...dto, picture: picturePath})
   }
 
@@ -24,11 +24,18 @@ export class ContentService {
     return await this.contentModel.find();
   }
 
-  /*async updateContent(): Promise<Content> {
-    return await this.contentModel.findOneAndUpdate();
-  } 
+  async getContentById(contentId: ObjectId): Promise<Content> {
+    return await this.contentModel.findById(contentId);
+  }
 
-  async deleteContent(trackId: ObjectId): Promise<ObjectId> {
-    return (await this.contentModel.findByIdAndDelete(trackId))._id;
-  } */
+  async updateContent(contentId: ObjectId, dto: CreateContentDTO, picture): Promise<Content> {
+    const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
+    return await this.contentModel.findOneAndUpdate({ contentId }, {...dto, picture: picturePath}, {
+      returnOriginal: false
+    });
+  }
+
+  async deleteContent(contentId: ObjectId): Promise<ObjectId> {
+    return (await this.contentModel.findByIdAndDelete(contentId))._id;
+  }
 }
