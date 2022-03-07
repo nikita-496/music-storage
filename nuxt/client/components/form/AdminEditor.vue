@@ -49,9 +49,10 @@
 
 <script lang="ts">
 import FileUpload from '../FileUpload.vue';
+import { eventBus } from '../../eventBus';
 import ContentService from '../../service/ContentService';
 import { Component, Vue } from 'nuxt-property-decorator';
-interface ContentInterface {
+interface IContent {
   title: string;
   text: string[];
   picture: any;
@@ -62,7 +63,7 @@ interface ContentInterface {
   }
 })
 export default class AdminEditor extends Vue {
-  private content: ContentInterface = {
+  private content: IContent = {
     title: '',
     text: [],
     picture: {}
@@ -90,7 +91,9 @@ export default class AdminEditor extends Vue {
     formData.append('title', this.content.title);
     formData.append('text', JSON.stringify(this.content.text));
     formData.append('picture', this.content.picture[0]);
-    ContentService.save(formData);
+    ContentService.save(formData).then((res) =>
+      eventBus.$emit('transfer', res.data)
+    );
   }
 }
 </script>
