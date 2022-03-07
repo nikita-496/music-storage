@@ -1,11 +1,16 @@
 <template>
-  <Tutorial/>
+  <div>
+    <admin-editor />
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({
-  name: 'IndexPage'
+import { Component, Vue } from 'nuxt-property-decorator';
+import AdminEditor from '../components/form/AdminEditor.vue';
+@Component({
+  components: {
+    AdminEditor
+  }
 })
+export default class Index extends Vue {}
 </script>

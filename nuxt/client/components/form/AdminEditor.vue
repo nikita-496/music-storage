@@ -54,7 +54,7 @@ import { Component, Vue } from 'nuxt-property-decorator';
 interface ContentInterface {
   title: string;
   text: string[];
-  picture: object;
+  picture: any;
 }
 @Component({
   components: {
@@ -68,6 +68,7 @@ export default class AdminEditor extends Vue {
     picture: {}
   };
   private textAreas: any = [];
+
   mounted() {
     if (sessionStorage.getItem('textAreas')) {
       this.textAreas = sessionStorage.getItem('textAreas').split(',');
