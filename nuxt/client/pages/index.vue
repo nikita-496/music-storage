@@ -1,18 +1,15 @@
 <template>
   <div>
-    <admin-editor />
-    <navbar />
+    <side-menu />
   </div>
 </template>
 
 <script lang="ts">
-import AdminEditor from '../components/form/AdminEditor.vue';
-import Navbar from '../components/Navbar.vue';
+import SideMenu from '../components/SideMenu.vue';
 import { Component, Vue } from 'nuxt-property-decorator';
 @Component({
   components: {
-    AdminEditor,
-    Navbar
+    SideMenu
   }
 })
 export default class Index extends Vue {}
