@@ -14,17 +14,20 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator';
+import { Component, Vue, Emit } from 'nuxt-property-decorator';
 @Component
 export default class FileUpload extends Vue {
   public getClicked() {
     const input: HTMLElement = this.$refs.input as HTMLElement;
     input.click();
   }
+
+  @Emit('onChangeFile')
   public onChange(ev: any) {
     const file = this.takeFile(ev);
-    this.$emit('on-change-file', file);
+    return file;
   }
+
   public takeFile(ev: any) {
     return ev.target.files;
   }
