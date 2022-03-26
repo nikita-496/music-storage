@@ -11,16 +11,19 @@ import { Model } from 'mongoose';
 export class TrackService {
   constructor(
     @InjectModel(Track.name) private trackModel: Model<TrackDocument>,
-    private fileService: FileService,
-  ){}
+    private fileService: FileService
+  ) {}
 
   private readonly track: Track;
   async createTrack(dto: CreateTrackDTO, audio, picture): Promise<Track> {
-    /*const track = await this.trackModel.create({ ...dto, listens: 0 });
-    return track;*/
     const audioPath = this.fileService.createFile(FileType.AUDIO, audio);
     const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
-    return this.trackModel.create({ ...dto, listens: 0, audio: audioPath, picture: picturePath });
+    return this.trackModel.create({
+      ...dto,
+      listens: 0,
+      audio: audioPath,
+      picture: picturePath
+    });
   }
   async getTracks(count = 10, offset = 0): Promise<Track[]> {
     return await this.trackModel.find().skip(offset).limit(count);
@@ -32,11 +35,11 @@ export class TrackService {
 
   async updateTrack(trackId: ObjectId, dto: UpdateTrackDTO): Promise<Track> {
     return await this.trackModel.findOneAndUpdate({ trackId }, dto);
-  } 
+  }
 
   async deleteTrack(trackId: ObjectId): Promise<ObjectId> {
     return (await this.trackModel.findByIdAndDelete(trackId))._id;
-  } 
+  }
 
   async listen(trackId: ObjectId) {
     const track = await this.trackModel.findById(trackId);
