@@ -10,31 +10,41 @@
       v-model="title"
     />
     <slot>
-      <label class="text-field__inpit" for="textArea" ref="textAreaLabel">
+      <label class="text-field__input" for="textArea">
         <br />Текст контента <br />
         <textarea
           class="text-field__area"
           type="text"
-          name=""
           id="textArea"
           v-model="text[0]"
         />
-        <template v-if="textAreas.length">
-          <textarea
-            v-for="n in textAreas"
-            :key="n"
-            class="admin-editor__area"
-            type="text"
-            name=""
-            id="textInput"
-            v-model="text[n]"
-          />
-        </template>
-        <button class="btn admin-editor__btn" @click.prevent="addTextArea">
-          +
-        </button>
-        <button class="btn admin-editor__btn" @click.prevent="removeTextArea">
+        <button
+          class="btn text-field__btn"
+          :disabled="textAreas.length ? false : true"
+          data-index="0"
+          @click.prevent="removeTextArea"
+        >
           -
+        </button>
+        <template v-if="textAreas.length">
+          <div v-for="n in textAreas" :key="n">
+            <textarea
+              class="text-field__area"
+              type="text"
+              id="textInput"
+              v-model="text[n]"
+            />
+            <button
+              class="btn text-field__btn"
+              :data-index="n"
+              @click.prevent="removeTextArea"
+            >
+              -
+            </button>
+          </div>
+        </template>
+        <button class="btn text-field__btn" @click.prevent="addTextArea">
+          +
         </button>
       </label>
     </slot>

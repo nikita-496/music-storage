@@ -3,7 +3,7 @@
     <create-content />
     <div
       class="admin-editor_created"
-      v-for="content in createdContent"
+      v-for="content in contents"
       :key="content._id"
     >
       <create-content
@@ -16,29 +16,15 @@
 </template>
 
 <script lang="ts">
-import CreateContent from './CreateContent.vue';
-import { Component, Vue } from 'nuxt-property-decorator';
-interface IContent {
-  title: string;
-  text: string[];
-  picture: any;
-}
+import CreateContent from './create-content/CreateContent.vue';
+import { Component, Vue, Prop } from 'nuxt-property-decorator';
 @Component({
   components: {
     CreateContent
   }
 })
 export default class AdminEditor extends Vue {
-  private content: IContent = {
-    title: '',
-    text: [],
-    picture: {}
-  };
-  private createdContent: object[] = [];
-
-  mounted() {
-    this.createdContent = JSON.parse(localStorage.getItem('createdContent'));
-  }
+  @Prop(Array) contents: object[];
 }
 </script>
 
