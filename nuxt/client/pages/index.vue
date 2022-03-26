@@ -1,11 +1,16 @@
 <template>
-  <Tutorial/>
+  <div>
+    <side-menu />
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({
-  name: 'IndexPage'
+import SideMenu from '../components/SideMenu.vue';
+import { Component, Vue } from 'nuxt-property-decorator';
+@Component({
+  components: {
+    SideMenu
+  }
 })
+export default class Index extends Vue {}
 </script>

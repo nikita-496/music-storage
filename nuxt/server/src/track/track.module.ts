@@ -7,9 +7,9 @@ import { Module } from '@nestjs/common';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Track.name, schema: TrackSchema }]),
+    MongooseModule.forFeature([{ name: Track.name, schema: TrackSchema }])
   ],
   controllers: [TrackController],
-  providers: [TrackService, FileService],
+  providers: [TrackService, FileService]
 })
 export class TrackModule {}

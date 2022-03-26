@@ -28,9 +28,9 @@ export class ContentService {
     return await this.contentModel.findById(contentId);
   }
 
-  async updateContent(contentId: ObjectId, dto: CreateContentDTO, picture): Promise<Content> {
+  async updateContent(contentId: ObjectId, dto?: CreateContentDTO, picture?): Promise<Content> {
     const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
-    return await this.contentModel.findOneAndUpdate({ contentId }, {...dto, picture: picturePath}, {
+    return await this.contentModel.findOneAndUpdate({contentId}, {...dto, picture: picturePath}, {
       returnOriginal: false
     });
   }

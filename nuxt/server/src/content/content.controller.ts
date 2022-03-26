@@ -5,7 +5,7 @@ import { ObjectId } from 'mongodb';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Controller, Get, Post, Patch, Body, Delete, Param, UseInterceptors, UploadedFile} from '@nestjs/common';
 
-@Controller('contents')
+@Controller('api/v1/content')
 export class ContentController {
   constructor(private contentService: ContentService) {}
 
