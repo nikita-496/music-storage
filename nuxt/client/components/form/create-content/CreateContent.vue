@@ -1,5 +1,5 @@
 <template>
-  <form class="create-content" method="post" @submit.prevent="create">
+  <form class="create-content" @submit.prevent="">
     <text-field
       :createdTitle="createdTitle"
       :createdText="createdText"
@@ -12,7 +12,8 @@
     <file-upload @onChangeFile="setFile">
       <button @click.prevent>Загрузите изображение</button>
     </file-upload>
-    <button class="btn create-content__btn">Создать</button>
+    <button class="btn create-content__btn" @click="create">Создать</button>
+    <button class="btn delete-content__btn" @click="remove">Удалить</button>
   </form>
 </template>
 
@@ -131,6 +132,8 @@ export default class CreateContent extends Vue {
     this.content.text = parsedText;
   }
 
+  public createFormData() {}
+
   public create() {
     const formData = new FormData();
     formData.append('title', this.content.title);
@@ -139,6 +142,14 @@ export default class CreateContent extends Vue {
     ContentService.save(formData, this.id).then((res: any) => {
       new TextAreas(localStorage).rewriteValueKey(res.data._id, this.textAreas);
     });
+  }
+  public remove() {
+    //const formData = this.createFormData();
+    const formData = new FormData();
+    formData.append('title', this.content.title);
+    formData.append('text', JSON.stringify(this.content.text));
+    formData.append('picture', this.content.picture[0]);
+    ContentService.delete(formData, this.id);
   }
 }
 </script>

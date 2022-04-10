@@ -76,6 +76,10 @@ export default class TextField extends Vue {
   titleChanged(newVal: string) {
     this.onChangeTitle(newVal);
   }
+  @Watch('text')
+  texthanged(newVal: string[]) {
+    this.onChangeText(newVal);
+  }
   @Emit('onChangeTitle')
   public onChangeTitle(val: string) {}
 
