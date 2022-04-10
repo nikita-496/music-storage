@@ -17,6 +17,7 @@
           type="text"
           id="textArea"
           v-model="text[0]"
+          data-index="0"
         />
         <button
           class="btn text-field__btn"
@@ -33,6 +34,7 @@
               type="text"
               id="textInput"
               v-model="text[n]"
+              :data-index="n"
             />
             <button
               class="btn text-field__btn"
@@ -56,7 +58,7 @@ import { Prop, Component, Vue, Watch, Emit } from 'nuxt-property-decorator';
 @Component
 export default class TextField extends Vue {
   @Prop(String) createdTitle: string;
-  @Prop([]) createdText: string[];
+  @Prop([]) createdText: string;
   @Prop([]) textAreas: string[];
   private title: string = '';
   private text: string[] = [''];
@@ -74,11 +76,6 @@ export default class TextField extends Vue {
   titleChanged(newVal: string) {
     this.onChangeTitle(newVal);
   }
-  @Watch('text')
-  textChanged(newVal: string[]) {
-    this.onChangeText(newVal);
-  }
-
   @Emit('onChangeTitle')
   public onChangeTitle(val: string) {}
 

@@ -24,7 +24,7 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator';
   }
 })
 export default class AdminEditor extends Vue {
-  @Prop(Array) contents: object[];
+  @Prop([]) contents: object[];
 }
 </script>
 

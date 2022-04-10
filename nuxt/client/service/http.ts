@@ -19,10 +19,10 @@ export const postJson =  (url: string, data: object) => {
 export const getJson = (url: string) => {
   return axios.get(`${url}`)
 }
-/*export const patchJson = (url: string, data: object) => {
+export const patchJson = (url: string, data: object) => {
   console.log(url)
   console.log(data)
   return axios.patch(url, data)
-}*/
+}
 
 export {api as API}

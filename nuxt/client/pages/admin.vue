@@ -27,7 +27,7 @@ import { API, getJson } from '../service/http';
   }
 })
 export default class Administartion extends Vue {
-  receivedСontent: object[];
+  receivedСontent: object[] = [];
 }
 </script>
 

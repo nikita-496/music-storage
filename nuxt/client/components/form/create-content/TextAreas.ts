@@ -1,7 +1,8 @@
+import {ITextAreas} from "~/client/programm-interface/ComponentInterfaces"
 import StorageManager from "../../../programm-interface/StorageManager"
 
 class TextAreas extends StorageManager {
-  private _textAreas: object = {}
+  private _textAreas: ITextAreas = {}
   private _localStorage: Storage
 
   constructor(localStorage: Storage) {
@@ -10,7 +11,7 @@ class TextAreas extends StorageManager {
     this._textAreas = TextAreas.get(this._localStorage)
   }
   
-  static get(localStorage: Storage): object | object[] {
+  static get(localStorage: Storage): ITextAreas {
    return JSON.parse(localStorage.getItem('textAreas') || 'null') 
   }
 
@@ -32,19 +33,21 @@ class TextAreas extends StorageManager {
     )
    }
 
-   public get textAreas() {
+  public get textAreas() {
      return this._textAreas
    }
 
-   public set textAreas(value: [any[], string]) {
-    if (!value[0].length) {
-      value[0].push(1)
+   public set textAreas(value: ITextAreas) {
+     const key = Object.keys(value)[0]
+     console.log(value[key])
+    if (value[key].length === 0) {
+      console.log(value[key].length)
+      value[key].push(String(1))
     }
     else{
-      value[0].push(value[0].length + 1)
+      value[key].push(String(value[key].length + 1))
     }
-
-    this.rewriteValue(value[0], value[1])
+    this.rewriteValue(value[key], Object.keys(value)[0])
     this._textAreas = TextAreas.get(this._localStorage)
    }
 }

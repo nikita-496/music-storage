@@ -2,7 +2,7 @@
   <aside class="menu">
     <nav class="menu__navigation">
       <div class="menu__list">
-        <list :contents="contents" @onEdit="edit"></list>
+        <list :contents="contents"></list>
       </div>
     </nav>
   </aside>
@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import List from './List.vue';
-import { Component, Vue } from 'nuxt-property-decorator';
+import { Component, Vue, Prop } from 'nuxt-property-decorator';
 
 @Component({
   components: {
@@ -18,12 +18,6 @@ import { Component, Vue } from 'nuxt-property-decorator';
   }
 })
 export default class SideMenu extends Vue {
-  private contents: [] = [];
-
-  mounted() {
-    if (localStorage.getItem('createdContent')) {
-      this.contents = JSON.parse(localStorage.getItem('createdContent'));
-    }
-  }
+  @Prop([]) contents: object[];
 }
 </script>

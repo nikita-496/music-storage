@@ -6,15 +6,11 @@ class ContenService {
     if (!id) {
       return postJson(API.content, contentData)
     }
-    /*else {
+    else {
       console.log('Обновление данных')
-      console.log(id)
-      console.log(contentData)
       return patchJson(`${API.content}/${id}`, contentData)
-    }*/
-    
+    }
   }
-
 }
 
 export default ContenService
