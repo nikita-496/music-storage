@@ -1,5 +1,5 @@
 
-import { API, postJson, patchJson, deleteJson } from './http';
+import { API, postJson, patchJson, deleteJson, getJson } from './http';
 
 class ContenService {
   static save(contentData: object, id?: string) {
@@ -11,8 +11,10 @@ class ContenService {
       return patchJson(`${API.content}/${id}`, contentData)
     }
   }
+  static get() {
+    return getJson(API.content)
+  }
   static delete(contentData: object, id: string) {
-    console.log('nen')
     deleteJson(`${API.content}/${id}`, contentData)
   }
 }
