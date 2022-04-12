@@ -1,8 +1,13 @@
 <template>
   <div class="item">
-    <p class="item__text" v-for="text in paragraphs" :key="text">
+    <NuxtLink
+      class="item__link"
+      :to="text === 'Создание контента' ? '/admin' : '/'"
+      v-for="text in paragraphs"
+      :key="text"
+    >
       {{ text }}
-    </p>
+    </NuxtLink>
     <img class="item__img" :src="`http://localhost:4000/${picture}`" alt="" />
   </div>
 </template>
@@ -15,3 +20,22 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import '../assets/scss/_vars.scss';
+@import '../assets/scss/_media/publicLayout.scss';
+
+.item__img {
+  width: 23px;
+  height: 23px;
+}
+.item__link {
+  display: block;
+  font-size: 1.125rem;
+  font-family: $Lato;
+  padding-bottom: 1em;
+  text-decoration: none;
+  color: $gray;
+}
+@include hideSidebars();
+</style>

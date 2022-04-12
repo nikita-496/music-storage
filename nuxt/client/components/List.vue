@@ -9,6 +9,14 @@
         ></item>
       </div>
     </li>
+    <li class="list__items">
+      <NuxtLink class="list__items-signin" to="/">
+        Зарегистрироваться
+      </NuxtLink>
+    </li>
+    <li class="list__items">
+      <NuxtLink class="list__items-login" to="/"> Войти </NuxtLink>
+    </li>
   </ul>
 </template>
 
@@ -25,3 +33,27 @@ export default class List extends Vue {
   @Prop([]) readonly contents: [];
 }
 </script>
+
+<style lang="scss" scoped>
+@import '../assets/scss/_media/publicLayout.scss';
+@import '../assets/scss/_vars.scss';
+
+.list {
+  margin-top: 6em;
+  padding: 0em 2em;
+}
+.list__items {
+  margin-bottom: 1.5em;
+  list-style: none;
+}
+.list__header {
+  display: inline-block;
+  font-size: 0.9375rem;
+  font-family: $Lato;
+  font-weight: 300;
+  color: $second-gray;
+
+  padding-bottom: 1.3em;
+}
+@include hideSidebars();
+</style>

@@ -1,0 +1,19 @@
+@import '../_vars.scss';
+
+@mixin hideSidebars() {
+  @media (max-width: map-get($breack-point, mobile)) {
+  .layout {
+    grid-template-columns: 80px 1fr 80px;
+  }
+  .list{
+    margin-top: 4em;
+  }
+  .list__header, 
+  .item__link,
+  .list__items-signin,
+  .list__items-login
+  {
+    display: none;
+  }
+}
+}

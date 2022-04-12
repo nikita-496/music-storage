@@ -1,0 +1,45 @@
+@mixin changeSideMenuView() {
+  @keyframes slidein {
+    from {
+      margin-left: 0em;
+      width: 100%;
+    }
+  
+    to {
+      margin-left: 0em;
+      width: 50%;
+    }
+  }
+  @keyframes slideout {
+    from {
+      margin-left: 0em;
+      width: 50%;
+    }
+  
+    to {
+      margin-left: 0%;
+      width: 100%;
+    }
+  }
+}
+
+@mixin movingImage() {
+  @keyframes movein {
+    from {
+      left: 80px;
+    }
+  
+    to {
+      left: 180px;
+    }
+  }
+  @keyframes moveout {
+    from {
+      left: 180px;
+    }
+  
+    to {
+      left: 80px;
+    }
+  }
+}
