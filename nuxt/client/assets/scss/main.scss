@@ -1,3 +1,8 @@
+@import './_vars.scss';
+
+:root{
+  font-family: $Lato;
+}
 body {
-  background-color: antiquewhite;
+  background-color: $body-bg;
 }

@@ -1,0 +1,24 @@
+//colors
+$body-bg: #F4F5FE;
+$white: #FFFFFF;
+$black: #15111E;
+$gray: #676669;
+$second-gray: #C8C6CE; 
+
+//fonts 
+$Lato: 'Lato', sans-serif;
+
+//breackpoints
+$breack-point: (
+  //extra-small screen
+  'xs': 479px,
+  //small
+  'sm': 639px,
+  //mobile
+  'mobile': 750px,
+  //middle
+  'md': 959px,
+  //large
+  'lg': 1199px,
+  'xl': 1904px
+);
