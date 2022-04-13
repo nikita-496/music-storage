@@ -1,7 +1,7 @@
 <template>
   <ul class="list">
     <li class="list__items" v-for="content in contents" :key="content._id">
-      <span class="list__header">{{ content.title }}</span>
+      <span v-show="isVisible" class="list__header">{{ content.title }}</span>
       <div class="list__content">
         <item
           :paragraphs="JSON.parse(content.text)"
@@ -9,13 +9,15 @@
         ></item>
       </div>
     </li>
-    <li class="list__items">
-      <NuxtLink class="list__items-signin" to="/">
+    <li v-show="isVisible" class="list__items list__items">
+      <NuxtLink v-show="isVisible" class="list__items-signin" to="/">
         Зарегистрироваться
       </NuxtLink>
     </li>
-    <li class="list__items">
-      <NuxtLink class="list__items-login" to="/"> Войти </NuxtLink>
+    <li v-show="isVisible" class="list__items list__items">
+      <NuxtLink v-show="isVisible" class="list__items-login" to="/">
+        Войти
+      </NuxtLink>
     </li>
   </ul>
 </template>
@@ -24,6 +26,8 @@
 import Item from './Item.vue';
 import { Component, Prop, Vue } from 'nuxt-property-decorator';
 
+import { eventBus } from '../eventBus';
+
 @Component({
   components: {
     Item
@@ -31,6 +35,10 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator';
 })
 export default class List extends Vue {
   @Prop([]) readonly contents: [];
+  private isVisible: boolean = true;
+  created() {
+    eventBus.$on('change', (sidebarStatus) => (this.isVisible = sidebarStatus));
+  }
 }
 </script>
 
@@ -40,14 +48,15 @@ export default class List extends Vue {
 
 .list {
   margin-top: 6em;
-  padding: 0em 2em;
+  padding: 0em 1.4em;
 }
+
 .list__items {
   margin-bottom: 1.5em;
   list-style: none;
 }
 .list__header {
-  display: inline-block;
+  display: block;
   font-size: 0.9375rem;
   font-family: $Lato;
   font-weight: 300;

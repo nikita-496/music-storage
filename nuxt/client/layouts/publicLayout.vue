@@ -25,6 +25,7 @@ import Search from '../components/input/Search.vue';
 import SideMenu from '../components/SideMenu.vue';
 import { Component, Vue } from 'nuxt-property-decorator';
 import ContenService from '../service/ContentService';
+import { eventBus } from '../eventBus';
 @Component({
   components: {
     Search,
@@ -38,9 +39,8 @@ export default class PublicLayout extends Vue {
     ContenService.get().then((r) => (this.receivedСontent = r.data));
   }
   public changeStatus(value) {
-    console.log(value);
     this.isOpen = value;
-    console.log(this.isOpen);
+    eventBus.$emit('change', this.isOpen);
   }
 }
 </script>
@@ -48,16 +48,6 @@ export default class PublicLayout extends Vue {
 <style lang="scss" scoped>
 @import '../assets/scss/_vars.scss';
 @import '../assets/scss/_media/publicLayout.scss';
-
-/*.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}*/
 
 .layout {
   display: grid;

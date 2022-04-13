@@ -1,7 +1,11 @@
 <template>
   <div class="item">
     <NuxtLink
-      class="item__link"
+      :class="
+        isVisible
+          ? 'item__link item__link_visible'
+          : 'item__link item__link_none'
+      "
       :to="text === 'Создание контента' ? '/admin' : '/'"
       v-for="text in paragraphs"
       :key="text"
@@ -13,10 +17,19 @@
 </template>
 
 <script lang="ts">
+import { eventBus } from '../eventBus';
 export default {
   props: {
     paragraphs: { type: [], require: true },
     picture: { type: String, require: true }
+  },
+  data() {
+    return {
+      isVisible: true
+    };
+  },
+  created() {
+    eventBus.$on('change', (sidebarStatus) => (this.isVisible = sidebarStatus));
   }
 };
 </script>
@@ -36,6 +49,12 @@ export default {
   padding-bottom: 1em;
   text-decoration: none;
   color: $gray;
+}
+.item__link_visible {
+  display: block;
+}
+.item__link_none {
+  display: none;
 }
 @include hideSidebars();
 </style>

@@ -43,3 +43,17 @@
     }
   }
 }
+
+@mixin hideTextContent() {
+  @keyframes hideout {
+    from {
+      margin-left: 0em;
+      width: 50%;
+    }
+  
+    to {
+      margin-left: 0%;
+      width: 100%;
+    }
+  }
+}

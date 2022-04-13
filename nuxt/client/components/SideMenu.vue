@@ -10,11 +10,13 @@
       alt="close-bar"
       @click="changeSidebar"
     />
-    <nav class="menu__navigation">
-      <div class="menu__list">
-        <list :contents="contents"></list>
-      </div>
-    </nav>
+    <div class="menu__navigation-wrapper">
+      <nav class="menu__navigation">
+        <div class="menu__list">
+          <list :contents="contents"></list>
+        </div>
+      </nav>
+    </div>
   </aside>
 </template>
 
@@ -43,12 +45,12 @@ export default class SideMenu extends Vue {
 @import '../assets/scss/_animations/sideMenu.scss';
 
 .menu_closed {
-  animation-duration: 0.8s;
+  animation-duration: 0.4s;
   animation-name: slidein;
   width: 50%;
 }
 .menu_opened {
-  animation-duration: 0.8s;
+  animation-duration: 0.4s;
   animation-name: slideout;
   width: 100%;
 }
@@ -63,13 +65,16 @@ export default class SideMenu extends Vue {
 }
 .image_close {
   left: 180px;
-  animation-duration: 0.8s;
+  animation-duration: 0.4s;
   animation-name: movein;
 }
 .image_open {
   left: 80px;
-  animation-duration: 0.8s;
+  animation-duration: 0.4s;
   animation-name: moveout;
+}
+.menu__navigation-wrapper {
+  width: 230px;
 }
 @include movingImage();
 
