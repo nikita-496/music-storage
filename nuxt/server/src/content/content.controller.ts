@@ -2,17 +2,18 @@ import { ContentService } from './content.service';
 import { Content } from './schemas/content.shemas';
 import { CreateContentDTO } from './dto/create-content.dto';
 import { ObjectId } from 'mongodb';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { Controller, Get, Post, Patch, Body, Delete, Param, UseInterceptors, UploadedFile} from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { Controller, Get, Post, Patch, Body, Delete, Param, UseInterceptors, UploadedFiles} from '@nestjs/common';
 
 @Controller('api/v1/content')
 export class ContentController {
   constructor(private contentService: ContentService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('picture'))
+  @UseInterceptors(FilesInterceptor('picture'))
   createContent(@Body() dto: CreateContentDTO, 
-  @UploadedFile() picture): Promise<Content> {
+  @UploadedFiles() picture): Promise<Content> {
+    console.log(picture)
      return this.contentService.createContent(dto, picture);
   }
 
@@ -26,11 +27,11 @@ export class ContentController {
   }
   
   @Patch(':contentId')
-  @UseInterceptors(FileInterceptor('picture'))
+  @UseInterceptors(FilesInterceptor('picture'))
   updateContent(
     @Param('contentId') contentId: ObjectId,
     @Body() dto: CreateContentDTO,
-    @UploadedFile() picture
+    @UploadedFiles() picture
   ): Promise<Content> {
     return this.contentService.updateContent(contentId, dto, picture)
   }

@@ -15,9 +15,17 @@ export class ContentService {
 
   private readonly content: Content;
 
-  async createContent(dto: CreateContentDTO, picture): Promise<Content> {
-    const picturePath = this.fileService.createFile(FileType.IMAGE, picture)
-    return this.contentModel.create({...dto, picture: picturePath})
+  async createContent(dto: CreateContentDTO, picture?): Promise<Content> {
+    if (Array.isArray(picture)){
+      let picturePaths: string[] = []
+      picture.forEach(item => {
+        const picturePath = this.fileService.createFile(FileType.IMAGE, item)
+        picturePaths.push(picturePath)
+      })
+      return this.contentModel.create({...dto, picture: JSON.stringify(picturePaths)})
+    }else{
+      return this.contentModel.create({...dto})
+    }
   }
 
   async getContents(): Promise<Content[]> {
