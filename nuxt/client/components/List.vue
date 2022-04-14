@@ -4,8 +4,8 @@
       <span v-show="isVisible" class="list__header">{{ content.title }}</span>
       <div class="list__content">
         <item
-          :paragraphs="JSON.parse(content.text)"
-          :picture="content.picture"
+          :paragraphs="content.text"
+          :pictures="JSON.parse(content.picture)"
         ></item>
       </div>
     </li>

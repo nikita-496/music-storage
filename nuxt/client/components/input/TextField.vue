@@ -7,7 +7,7 @@
       class="text-field__inpit"
       type="text"
       id="titleInput"
-      v-model="title"
+      v-model.trim="title"
     />
     <slot>
       <label class="text-field__input" for="textArea">
@@ -27,6 +27,9 @@
         >
           -
         </button>
+        <file-upload @onChangeFile="sendFile">
+          <button @click.prevent>Загрузите изображение</button>
+        </file-upload>
         <template v-if="textAreas.length">
           <div v-for="n in textAreas" :key="n">
             <textarea
@@ -43,6 +46,9 @@
             >
               -
             </button>
+            <file-upload @onChangeFile="sendFile">
+              <button @click.prevent>Загрузите изображение</button>
+            </file-upload>
           </div>
         </template>
         <button class="btn text-field__btn" @click.prevent="addTextArea">
@@ -58,7 +64,7 @@ import { Prop, Component, Vue, Watch, Emit } from 'nuxt-property-decorator';
 @Component
 export default class TextField extends Vue {
   @Prop(String) createdTitle: string;
-  @Prop([]) createdText: string;
+  @Prop([]) createdText: string[];
   @Prop([]) textAreas: string[];
   private title: string = '';
   private text: string[] = [''];
@@ -68,7 +74,7 @@ export default class TextField extends Vue {
       this.title = this.createdTitle;
     }
     if (this.createdText) {
-      this.text = JSON.parse(this.createdText);
+      this.text = this.createdText;
     }
   }
 
@@ -77,7 +83,7 @@ export default class TextField extends Vue {
     this.onChangeTitle(newVal);
   }
   @Watch('text')
-  texthanged(newVal: string[]) {
+  textChanged(newVal: string[]) {
     this.onChangeText(newVal);
   }
   @Emit('onChangeTitle')
@@ -91,6 +97,9 @@ export default class TextField extends Vue {
 
   @Emit('removeTextArea')
   public removeTextArea() {}
+
+  @Emit('sendFile')
+  public sendFile(file: {}) {}
 }
 </script>
 

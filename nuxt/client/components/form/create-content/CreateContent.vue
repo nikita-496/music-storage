@@ -8,10 +8,8 @@
       @onChangeText="setText"
       @addTextArea="setTextArea"
       @removeTextArea="delTextArea"
+      @sendFile="setFile"
     />
-    <file-upload @onChangeFile="setFile">
-      <button @click.prevent>Загрузите изображение</button>
-    </file-upload>
     <button class="btn create-content__btn" @click="create">Создать</button>
     <button class="btn delete-content__btn" @click="remove">Удалить</button>
   </form>
@@ -39,7 +37,7 @@ export default class CreateContent extends Vue {
   private content: IContent = {
     title: '',
     text: [],
-    picture: {}
+    picture: []
   };
   private textAreas: string[] = [];
   private tempId: string | null = '';
@@ -86,7 +84,7 @@ export default class CreateContent extends Vue {
     this.content.text = text;
   }
   public setFile(file: {}) {
-    this.content.picture = file;
+    this.content.picture.push(file);
   }
 
   public setTextArea(value) {
@@ -137,17 +135,21 @@ export default class CreateContent extends Vue {
   public create() {
     const formData = new FormData();
     formData.append('title', this.content.title);
-    formData.append('text', JSON.stringify(this.content.text));
-    formData.append('picture', this.content.picture[0]);
+    /*if (this.content.text.length === 1) {
+      formData.append('text', JSON.stringify(this.content.text));
+    } else {
+      this.content.text.forEach((text) => formData.append('text', text));
+    }*/
+    this.content.text.forEach((text) => formData.append('text', text));
+    this.content.picture.forEach((file) => formData.append('picture', file));
     ContentService.save(formData, this.id).then((res: any) => {
       new TextAreas(localStorage).rewriteValueKey(res.data._id, this.textAreas);
     });
   }
   public remove() {
-    //const formData = this.createFormData();
     const formData = new FormData();
     formData.append('title', this.content.title);
-    formData.append('text', JSON.stringify(this.content.text));
+    formData.append('text', this.content.text);
     formData.append('picture', this.content.picture[0]);
     ContentService.delete(formData, this.id);
   }

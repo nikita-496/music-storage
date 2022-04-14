@@ -1,18 +1,37 @@
 <template>
   <div class="item">
-    <NuxtLink
-      :class="
-        isVisible
-          ? 'item__link item__link_visible'
-          : 'item__link item__link_none'
-      "
-      :to="text === 'Создание контента' ? '/admin' : '/'"
-      v-for="text in paragraphs"
-      :key="text"
-    >
-      {{ text }}
-    </NuxtLink>
-    <img class="item__img" :src="`http://localhost:4000/${picture}`" alt="" />
+    <div v-if="Array.isArray(paragraphs)">
+      <div v-for="(text, i) in paragraphs" :key="text">
+        <NuxtLink
+          v-show="isVisible"
+          class="item__link"
+          :to="text === 'Создание контента' ? '/admin' : '/'"
+        >
+          {{ text }}
+        </NuxtLink>
+        <img
+          v-if="pictures.length !== 0"
+          class="item__img"
+          :src="`http://localhost:4000/${pictures[i]}`"
+          :alt="`Иконка ссылки ${text}`"
+        />
+      </div>
+    </div>
+    <div v-else>
+      <NuxtLink
+        v-show="isVisible"
+        class="item__link"
+        :to="paragraphs === 'Создание контента' ? '/admin' : '/'"
+      >
+        {{ paragraphs }}
+      </NuxtLink>
+      <img
+        v-if="pictures.length !== 0"
+        class="item__img"
+        :src="`http://localhost:4000/${pictures[i]}`"
+        :alt="`Иконка ссылки ${paragraphs}`"
+      />
+    </div>
   </div>
 </template>
 
@@ -21,7 +40,7 @@ import { eventBus } from '../eventBus';
 export default {
   props: {
     paragraphs: { type: [], require: true },
-    picture: { type: String, require: true }
+    pictures: { type: [], require: true }
   },
   data() {
     return {
@@ -43,18 +62,12 @@ export default {
   height: 23px;
 }
 .item__link {
-  display: block;
+  display: inline-block;
   font-size: 1.125rem;
   font-family: $Lato;
   padding-bottom: 1em;
   text-decoration: none;
   color: $gray;
-}
-.item__link_visible {
-  display: block;
-}
-.item__link_none {
-  display: none;
 }
 @include hideSidebars();
 </style>

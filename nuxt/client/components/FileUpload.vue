@@ -29,7 +29,7 @@ export default class FileUpload extends Vue {
   }
 
   public takeFile(ev: any) {
-    return ev.target.files;
+    return ev.target.files[0];
   }
 }
 </script>
