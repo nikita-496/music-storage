@@ -1,7 +1,7 @@
 <template>
-  <div class="item">
+  <div class="items">
     <div v-if="Array.isArray(paragraphs)">
-      <div v-for="(text, i) in paragraphs" :key="text">
+      <div class="item" v-for="(text, i) in paragraphs" :key="text">
         <NuxtLink
           v-show="isVisible"
           class="item__link"
@@ -15,9 +15,10 @@
           :src="`http://localhost:4000/${pictures[i]}`"
           :alt="`Иконка ссылки ${text}`"
         />
+        <span class="decorate"></span>
       </div>
     </div>
-    <div v-else>
+    <div v-else class="item">
       <NuxtLink
         v-show="isVisible"
         class="item__link"
@@ -31,6 +32,7 @@
         :src="`http://localhost:4000/${pictures[i]}`"
         :alt="`Иконка ссылки ${paragraphs}`"
       />
+      <span class="decorate"></span>
     </div>
   </div>
 </template>
@@ -55,8 +57,35 @@ export default {
 
 <style lang="scss" scoped>
 @import '../assets/scss/_vars.scss';
-@import '../assets/scss/_media/publicLayout.scss';
+@import '../assets/scss/_media/sidebar.scss';
 
+.item {
+  display: flex;
+  justify-content: space-between;
+  &:hover .item__link {
+    color: $black;
+  }
+  &:hover .decorate {
+    display: inline-block;
+  }
+}
+.decorate {
+  perspective: 200px;
+  display: none;
+  width: 30px;
+  height: 5px;
+  &::before {
+    border: 1px solid;
+    transform: rotateX(1deg) rotate(-90deg);
+    transform-origin: 80% 50%;
+    border-radius: 5px 5px 0 0;
+    height: 80%;
+    width: 80%;
+    position: absolute;
+    content: '';
+    background-color: $black;
+  }
+}
 .item__img {
   width: 23px;
   height: 23px;
@@ -69,5 +98,5 @@ export default {
   text-decoration: none;
   color: $gray;
 }
-@include hideSidebars();
+@include hideSidebar();
 </style>

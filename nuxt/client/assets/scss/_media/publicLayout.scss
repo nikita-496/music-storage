@@ -1,6 +1,22 @@
 @import '../_vars.scss';
 
-@mixin hideSidebars() {
+@mixin changeSizeLayout() {
+  @media (max-width: map-get($breack-point, xxl)) {
+    .layout {
+      grid-template-columns: 240px 1fr 240px;
+    }
+  }
+  @media (max-width: 1440px) {
+    .layout {
+      grid-template-columns: 230px 1fr 230px;
+    }
+  }
+  @media (max-width: map-get($breack-point, xl)) {
+    .layout {
+      grid-template-columns: 200px 1fr 200px;
+
+    }
+  }
   @media (max-width: map-get($breack-point, mobile)) {
   .layout {
     grid-template-columns: 80px 1fr 80px;

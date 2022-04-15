@@ -43,12 +43,12 @@ export default class List extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/_media/publicLayout.scss';
+@import '../assets/scss/_media/sidebar.scss';
 @import '../assets/scss/_vars.scss';
 
 .list {
   margin-top: 6em;
-  padding: 0em 1.4em;
+  padding-left: 2em;
 }
 
 .list__items {
@@ -64,5 +64,5 @@ export default class List extends Vue {
 
   padding-bottom: 1.3em;
 }
-@include hideSidebars();
+@include hideSidebar();
 </style>

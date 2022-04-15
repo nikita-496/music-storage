@@ -1,8 +1,20 @@
 @import './_vars.scss';
+@import './_media/main.scss';
 
 :root{
+  font-size: calc(1vw + 0.1em);
   font-family: $Lato;
+  box-sizing: border-box;
+}
+*,
+*::before,
+*::after{
+ -moz-box-sizing: inherit;
+ -webkit-box-sizing: inherit;
+ box-sizing: inherit;
 }
 body {
   background-color: $body-bg;
 }
+
+@include mainFontSize();

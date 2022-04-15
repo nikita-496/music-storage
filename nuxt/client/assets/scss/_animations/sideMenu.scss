@@ -1,3 +1,4 @@
+@import '../vars';
 @mixin changeSideMenuView() {
   @keyframes slidein {
     from {
@@ -17,10 +18,18 @@
     }
   
     to {
-      margin-left: 0%;
+      margin-left: 0em;
       width: 100%;
     }
   }
+  
+@media (max-width: map-get($breack-point, mobile)) {
+  .menu_opened{
+    position: relative;
+    z-index: 1;
+   width: 300%;
+  }
+ }
 }
 
 @mixin movingImage() {
@@ -28,20 +37,60 @@
     from {
       left: 80px;
     }
-  
     to {
-      left: 180px;
+      left: 190px;
     }
   }
+  
   @keyframes moveout {
     from {
-      left: 180px;
+      left: 190px;
     }
   
     to {
       left: 80px;
     }
   }
+  @media (max-width: map-get($breack-point, xl)) {
+    @keyframes movein {
+      from {
+        left: 60px;
+      }
+      to {
+        left: 160px;
+      }
+    }
+    
+    @keyframes moveout {
+      from {
+        left: 160px;
+      }
+    
+      to {
+        left: 60px;
+      }
+    }
+}
+@media (max-width: map-get($breack-point, mobile)) {
+  @keyframes movein {
+    from {
+      left: 10px;
+    }
+    to {
+      left: 210px;
+    }
+  }
+  
+  @keyframes moveout {
+    from {
+      left: 210px;
+    }
+  
+    to {
+      left: 10px;
+    }
+  }
+}
 }
 
 @mixin hideTextContent() {

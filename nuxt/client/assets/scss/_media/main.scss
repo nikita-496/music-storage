@@ -1,0 +1,29 @@
+@import '../_vars.scss';
+
+@mixin mainFontSize() {
+  @media (min-width: map-get($breack-point, xxl)) {
+    :root{
+      font-size: 1.1rem;
+    }
+  }
+  @media (max-width: map-get($breack-point, xxl)) {
+    :root{
+      font-size: calc(1vw + 0.01em);
+    }
+  }
+  @media (max-width: 1440px) {
+    :root{
+      font-size: calc(1vw + 0.15em);
+    }
+  }
+  @media (max-width: map-get($breack-point, lg)) {
+    :root{
+      font-size: calc(1vw + 0.2em);
+    }
+  }
+  @media (max-width: map-get($breack-point, md)) {
+    :root{
+      font-size: calc(1vw + 0.35em);
+    }
+  }
+}

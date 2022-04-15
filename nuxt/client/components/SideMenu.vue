@@ -41,7 +41,7 @@ export default class SideMenu extends Vue {
 
 <style lang="scss" scoped>
 @import '../assets/scss/_vars.scss';
-@import '../assets/scss/_media/publicLayout.scss';
+@import '../assets/scss/_media/sidebar.scss';
 @import '../assets/scss/_animations/sideMenu.scss';
 
 .menu_closed {
@@ -64,7 +64,7 @@ export default class SideMenu extends Vue {
   cursor: pointer;
 }
 .image_close {
-  left: 180px;
+  left: 190px;
   animation-duration: 0.4s;
   animation-name: movein;
 }
@@ -78,5 +78,5 @@ export default class SideMenu extends Vue {
 }
 @include movingImage();
 
-@include hideSidebars();
+@include hideSidebar();
 </style>

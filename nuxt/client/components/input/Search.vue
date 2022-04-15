@@ -23,13 +23,13 @@ export default class Search extends Vue {}
 
 .search__image {
   position: relative;
-  top: 3px;
-  left: 40px;
+  top: 32px;
+  left: 10px;
   width: 20px;
   height: 20px;
 }
 .search__input {
-  width: 20em;
+  width: 100%;
   padding: 0.9em 1.5em;
   padding-left: 3em;
   border: 1px solid transparent;
