@@ -36,7 +36,7 @@ export default class PublicLayout extends Vue {
   private receivedСontent: [] = [];
   private isOpen: boolean = true;
   mounted() {
-    ContenService.get().then((r) => (this.receivedСontent = r.data));
+    ContenService.get().then((r) => (this.receivedСontent = r.data.reverse()));
   }
   public changeStatus(value) {
     this.isOpen = value;

@@ -43,9 +43,7 @@ export default class CreateContent extends Vue {
   private tempId: string | null = '';
 
   mounted() {
-    console.log(this.createdText);
     this.generateTempId();
-
     const allTextAreas: ITextAreas = new TextAreas(localStorage).textAreas;
     if (allTextAreas) {
       const key = this.getKey();
