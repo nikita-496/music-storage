@@ -13,7 +13,6 @@ export class ContentController {
   @UseInterceptors(FilesInterceptor('picture'))
   createContent(@Body() dto: CreateContentDTO, 
   @UploadedFiles() picture): Promise<Content> {
-    console.log(picture)
      return this.contentService.createContent(dto, picture);
   }
 
@@ -33,6 +32,7 @@ export class ContentController {
     @Body() dto: CreateContentDTO,
     @UploadedFiles() picture
   ): Promise<Content> {
+    console.log(picture)
     return this.contentService.updateContent(contentId, dto, picture)
   }
 

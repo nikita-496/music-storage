@@ -37,8 +37,12 @@ export class ContentService {
   }
 
   async updateContent(contentId: ObjectId, dto?: CreateContentDTO, picture?): Promise<Content> {
-    const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
-    return await this.contentModel.findOneAndUpdate({_id: contentId}, {$set: {...dto, picture: picturePath}}, {
+  let picturePaths: string[] = []
+      picture.forEach(item => {
+        const picturePath = this.fileService.createFile(FileType.IMAGE, item)
+        picturePaths.push(picturePath)
+      })
+    return await this.contentModel.findOneAndUpdate({_id: contentId}, {$set: {...dto, picture: JSON.stringify(picturePaths)}}, {
       returnDocument: "after",
     },
     function(err, result){
@@ -49,7 +53,6 @@ export class ContentService {
       }
   });
   }
-
   async deleteContent(contentId: ObjectId): Promise<ObjectId> {
     return (await this.contentModel.findByIdAndDelete(contentId))._id;
   }
