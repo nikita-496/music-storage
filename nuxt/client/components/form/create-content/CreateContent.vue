@@ -32,7 +32,7 @@ import {
 })
 export default class CreateContent extends Vue {
   @Prop(String) createdTitle: string;
-  @Prop(Array) createdText: string[];
+  @Prop() createdText: string[];
   @Prop(String) id: string;
   private content: IContent = {
     title: '',
@@ -43,6 +43,7 @@ export default class CreateContent extends Vue {
   private tempId: string | null = '';
 
   mounted() {
+    console.log(this.createdText);
     this.generateTempId();
 
     const allTextAreas: ITextAreas = new TextAreas(localStorage).textAreas;
@@ -88,7 +89,6 @@ export default class CreateContent extends Vue {
   }
 
   public setTextArea(value) {
-    console.log(value);
     if (this.tempId) {
       new TextAreas(localStorage).textAreas = {
         [this.tempId]: this.textAreas
@@ -125,9 +125,8 @@ export default class CreateContent extends Vue {
   }
 
   public removeText(indexText: number) {
-    const parsedText = JSON.parse(String(this.createdText));
-    parsedText.splice(indexText, 1);
-    this.content.text = parsedText;
+    const copyCreatedText = this.createdText;
+    this.content.text = copyCreatedText.splice(indexText, 1);
   }
 
   public createFormData() {}
@@ -135,11 +134,6 @@ export default class CreateContent extends Vue {
   public create() {
     const formData = new FormData();
     formData.append('title', this.content.title);
-    /*if (this.content.text.length === 1) {
-      formData.append('text', JSON.stringify(this.content.text));
-    } else {
-      this.content.text.forEach((text) => formData.append('text', text));
-    }*/
     this.content.text.forEach((text) => formData.append('text', text));
     this.content.picture.forEach((file) => formData.append('picture', file));
     ContentService.save(formData, this.id).then((res: any) => {
@@ -150,7 +144,7 @@ export default class CreateContent extends Vue {
     const formData = new FormData();
     formData.append('title', this.content.title);
     formData.append('text', this.content.text);
-    formData.append('picture', this.content.picture[0]);
+    formData.append('picture', this.content.picture);
     ContentService.delete(formData, this.id);
   }
 }

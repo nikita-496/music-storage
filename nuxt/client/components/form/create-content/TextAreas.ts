@@ -26,8 +26,7 @@ class TextAreas extends StorageManager {
   rewriteValueKey(valueKey: string, storageValue: object | object[], ) {
     this.write('textAreas', 
       {
-        ...TextAreas.get(this._localStorage), 
-        //[tempKey]: [], 
+        ...TextAreas.get(this._localStorage),
         [valueKey]: storageValue
       }
     )
@@ -41,7 +40,6 @@ class TextAreas extends StorageManager {
      const key = Object.keys(value)[0]
      console.log(value[key])
     if (value[key].length === 0) {
-      console.log(value[key].length)
       value[key].push(String(1))
     }
     else{

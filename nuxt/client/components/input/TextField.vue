@@ -70,9 +70,8 @@ export default class TextField extends Vue {
   private text: string[] = [''];
 
   mounted() {
-    if (this.createdTitle) {
-      this.title = this.createdTitle;
-    }
+    this.title = this.createdTitle;
+
     if (this.createdText) {
       this.text = this.createdText;
     }

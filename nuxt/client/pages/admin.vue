@@ -14,6 +14,12 @@ import { API, getJson } from '../service/http';
       await getJson(API.content).then((res) => {
         receivedСontent = res.data;
       });
+      receivedСontent.forEach((content) => {
+        if (!Array.isArray(content.text)) {
+          const text = content.text;
+          content.text = new Array(1).fill(text);
+        }
+      });
     } catch (e) {
       console.log(e);
     }
