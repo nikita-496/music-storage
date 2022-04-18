@@ -27,5 +27,7 @@ p{
   margin-bottom: 1.5em;
   list-style: none;
 }
-
+.action-button__content_none-decoration {
+  text-decoration: none;
+}
 @include mainFontSize();

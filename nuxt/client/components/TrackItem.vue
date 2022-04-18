@@ -16,7 +16,9 @@
           class="play-list__content-image"
           :src="`http://localhost:4000/${track.picture}`"
         />
-        <span class="play-list__content">{{ track.name }}</span>
+        <NuxtLink class="play-list__content" :to="`/tracks/${track._id}`">{{
+          track.name
+        }}</NuxtLink>
         <span class="play-list__content">{{ track.artist }}</span>
         <span class="play-list__content">3:12</span>
         <span class="play-list__content">Новый альбом</span>
