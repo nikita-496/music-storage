@@ -11,6 +11,7 @@
     />
     <Nuxt class="main" />
     <!--<side-menu class="aside" :contents="receivedСontent" />-->
+    <player />
     <footer class="footer">
       <p class="footer__coopy">
         &copy; {{ new Date().getFullYear() }} Все права защищены
@@ -22,13 +23,15 @@
 <script lang="ts">
 import Search from '../components/input/Search.vue';
 import SideMenu from '../components/SideMenu.vue';
+import Player from '../components/Player.vue';
 import { Component, Vue } from 'nuxt-property-decorator';
 import ContenService from '../service/ContentService';
 import { eventBus } from '../eventBus';
 @Component({
   components: {
     Search,
-    SideMenu
+    SideMenu,
+    Player
   }
 })
 export default class PublicLayout extends Vue {

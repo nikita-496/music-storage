@@ -30,4 +30,9 @@ p{
 .action-button__content_none-decoration {
   text-decoration: none;
 }
+.track-item__image-state{
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
 @include mainFontSize();

@@ -7,7 +7,7 @@
           ? require('../assets/images/icons/pause.svg')
           : require('../assets/images/icons/play.svg')
       "
-      alt="Обложка трека"
+      :alt="isActive ? 'Приостановить трек' : 'Запустить трек'"
     />
     <list class="track-item__list">
       <template v-slot:item>
@@ -52,11 +52,6 @@ export default class TrackItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.track-item__image-state {
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-}
 .track-item__list {
   display: inline-block;
 }
