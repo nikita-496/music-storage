@@ -7,3 +7,12 @@ export interface IContent {
   text: string[];
   picture: any;
 }
+
+export interface ITrack {
+_id: string,
+picture: string,
+audio: string,
+listens: number,
+artist: string,
+name: string,
+}

@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Emit } from 'nuxt-property-decorator';
-@Component({})
+@Component
 export default class ActionButton extends Vue {
   @Prop(Boolean) isDisabled: boolean;
   @Prop(Boolean) isLast: Boolean;
