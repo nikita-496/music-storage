@@ -16,5 +16,16 @@
 body {
   background-color: $body-bg;
 }
+p{
+ margin: 0em;
+}
+
+.container{
+  margin: 0em 5em;
+}
+.list__items {
+  margin-bottom: 1.5em;
+  list-style: none;
+}
 
 @include mainFontSize();

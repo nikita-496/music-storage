@@ -9,14 +9,13 @@
       :isOpen="isOpen"
       @changeSidebar="changeStatus"
     />
-    <main class="main"></main>
-    <side-menu class="aside" :contents="receivedСontent" />
+    <Nuxt class="main" />
+    <!--<side-menu class="aside" :contents="receivedСontent" />-->
     <footer class="footer">
       <p class="footer__coopy">
         &copy; {{ new Date().getFullYear() }} Все права защищены
       </p>
     </footer>
-    <Nuxt class="nuxt" />
   </div>
 </template>
 
@@ -52,10 +51,6 @@ export default class PublicLayout extends Vue {
 .layout {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  /*grid-template-columns: minmax(100px, 230px) minmax(500px, 1200px) minmax(
-      100px,
-      230px
-    );*/
   grid-template-columns: 230px 1fr 230px;
   grid-template-areas:
     'menu header aside'

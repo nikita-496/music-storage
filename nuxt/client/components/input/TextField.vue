@@ -27,7 +27,11 @@
         >
           -
         </button>
-        <file-upload @onChangeFile="sendFile">
+        <file-upload
+          :accept="'image/*'"
+          :name="'picture'"
+          @onChangeFile="sendFile"
+        >
           <button @click.prevent>Загрузите изображение</button>
         </file-upload>
         <template v-if="textAreas.length">

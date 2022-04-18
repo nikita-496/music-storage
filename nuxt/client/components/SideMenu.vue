@@ -13,7 +13,37 @@
     <div class="menu__navigation-wrapper">
       <nav class="menu__navigation">
         <div class="menu__list">
-          <list :contents="contents"></list>
+          <list v-for="content in contents" :key="content._id">
+            <template v-slot:header>
+              <li class="list__items">
+                <span v-show="isVisible" class="list__header">{{
+                  content.title
+                }}</span>
+              </li>
+            </template>
+            <template v-slot:item>
+              <li class="list__items">
+                <item
+                  :paragraphs="content.text"
+                  :pictures="JSON.parse(content.picture)"
+                ></item>
+              </li>
+            </template>
+          </list>
+          <list>
+            <template v-slot:auth>
+              <li v-show="isVisible" class="list__items">
+                <NuxtLink v-show="isVisible" class="list__items-signin" to="/">
+                  Зарегистрироваться
+                </NuxtLink>
+              </li>
+              <li v-show="isVisible" class="list__items">
+                <NuxtLink v-show="isVisible" class="list__items-login" to="/">
+                  Войти
+                </NuxtLink>
+              </li>
+            </template>
+          </list>
         </div>
       </nav>
     </div>
@@ -22,16 +52,19 @@
 
 <script lang="ts">
 import List from './List.vue';
+import Item from './Item.vue';
 import { Component, Vue, Prop } from 'nuxt-property-decorator';
 
 @Component({
   components: {
-    List
+    List,
+    Item
   }
 })
 export default class SideMenu extends Vue {
   @Prop([]) contents: object[];
   @Prop([]) isOpen: boolean;
+  private isVisible: boolean = true;
   public changeSidebar() {
     const sidebarStatus = this.isOpen;
     this.$emit('changeSidebar', !sidebarStatus);
@@ -74,8 +107,10 @@ export default class SideMenu extends Vue {
   animation-name: moveout;
 }
 .menu__navigation-wrapper {
+  margin-top: 4em;
   width: 230px;
 }
+
 @include movingImage();
 
 @include hideSidebar();

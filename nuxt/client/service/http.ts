@@ -5,11 +5,13 @@ const baseUrl = 'http://localhost:4000/api/v1';
 const url = (url: string): string => `${baseUrl}${url}`
 
 interface endPoint {
-  content: string
+  content: string,
+  track: string
 }
 
 const api: endPoint = {
-  content: url('/content')
+  content: url('/content'),
+  track: url('/track')
 }
 
 export const postJson = (url: string, data: object) => {

@@ -5,17 +5,21 @@
       src="../../assets/images/icons/search.svg"
       alt="search"
     />
-    <input
-      class="search__input"
-      type="text"
-      placeholder="Композиция, альбом, исполнитель ..."
-    />
+    <app-input :value="placeholder" />
   </div>
 </template>
 
-<script>
-import { Prop, Component, Vue, Watch, Emit } from 'nuxt-property-decorator';
-export default class Search extends Vue {}
+<script lang="ts">
+import AppInput from '../input/AppInput.vue';
+import { Component, Vue } from 'nuxt-property-decorator';
+@Component({
+  components: {
+    AppInput
+  }
+})
+export default class Search extends Vue {
+  private placeholder: string = 'Композиция, альбом, исполнитель ...';
+}
 </script>
 
 <style lang="scss" scoped>
@@ -27,52 +31,5 @@ export default class Search extends Vue {}
   left: 10px;
   width: 20px;
   height: 20px;
-}
-.search__input {
-  width: 100%;
-  padding: 0.9em 1.5em;
-  padding-left: 3em;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  outline: none;
-}
-.search__input::placeholder {
-  font-family: $Lato;
-  font-size: 0.9rem;
-
-  color: $black;
-  opacity: 0.6;
-}
-input::-webkit-input-placeholder {
-  opacity: 1;
-  transition: opacity 0.4s ease;
-}
-input::-moz-placeholder {
-  opacity: 1;
-  transition: opacity 0.4s ease;
-}
-input:-moz-placeholder {
-  opacity: 1;
-  transition: opacity 0.4s ease;
-}
-input:-ms-input-placeholder {
-  opacity: 1;
-  transition: opacity 0.4s ease;
-}
-input:focus::-webkit-input-placeholder {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-input:focus::-moz-placeholder {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-input:focus:-moz-placeholder {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-input:focus:-ms-input-placeholder {
-  opacity: 0;
-  transition: opacity 0.4s ease;
 }
 </style>

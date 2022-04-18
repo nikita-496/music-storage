@@ -4,8 +4,7 @@
       v-show="false"
       class="file-upload__input"
       type="file"
-      name="picture"
-      accept="image/*"
+      :accept="accept"
       ref="input"
       @change="onChange"
     />
@@ -14,9 +13,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Emit } from 'nuxt-property-decorator';
+import { Component, Vue, Emit, Prop } from 'nuxt-property-decorator';
 @Component
 export default class FileUpload extends Vue {
+  @Prop(String) accept: string;
+  @Prop(String) name: string;
   public getClicked() {
     const input: HTMLElement = this.$refs.input as HTMLElement;
     input.click();
