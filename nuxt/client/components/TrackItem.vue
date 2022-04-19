@@ -8,6 +8,7 @@
           : require('../assets/images/icons/play.svg')
       "
       :alt="isActive ? 'Приостановить трек' : 'Запустить трек'"
+      @click="changeTrackState"
     />
     <list class="track-item__list">
       <template v-slot:item>
@@ -35,16 +36,22 @@
 
 <script lang="ts">
 import List from '../components/List.vue';
-import { Component, Vue, Prop } from 'nuxt-property-decorator';
+import { Component, mixins, Prop } from 'nuxt-property-decorator';
 import TrackService from '../service/TrackService';
+import playButton from '../mixins/playButton';
 @Component({
+  mixins: [playButton],
   components: {
     List
   }
 })
-export default class TrackItem extends Vue {
+export default class TrackItem extends mixins(playButton) {
   @Prop(Object) track: object;
   private isActive: boolean = false;
+  public changeTrackState() {
+    this.play();
+    this.isActive = !this.isActive;
+  }
   public remove() {
     TrackService.delete(this.track, this.track._id);
   }

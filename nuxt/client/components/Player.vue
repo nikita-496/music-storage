@@ -14,11 +14,12 @@
         <img
           class="track-item__image-state"
           :src="
-            isActive
+            playerState
               ? require('../assets/images/icons/pause.svg')
               : require('../assets/images/icons/play.svg')
           "
-          :alt="isActive ? 'Приостановить трек' : 'Запустить трек'"
+          :alt="playerState ? 'Приостановить трек' : 'Запустить трек'"
+          @click="play"
         />
       </div>
       <track-progress class="volume__track-progress" :left="0" :right="100" />
@@ -31,15 +32,15 @@
 
 <script lang="ts">
 import TrackProgress from '../components/TrackProgress.vue';
-import { Component, Vue } from 'nuxt-property-decorator';
+import { Component, mixins } from 'nuxt-property-decorator';
+import playButton from '../mixins/playButton';
 @Component({
+  mixins: [playButton],
   components: {
     TrackProgress
   }
 })
-export default class Player extends Vue {
-  private isActive: boolean = false;
-}
+export default class Player extends mixins(playButton) {}
 </script>
 
 <style lang="scss" scoped>
