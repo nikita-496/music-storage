@@ -7,17 +7,30 @@ const state: PlayerState = {
   active: null,
   currentTime: 0,
   duration: 0,
-  pause: false,
-  volume: 0
+  pause: true,
+  volume: 50,
+  track: null
 }
 
 const getters = {
   isPause: (state: PlayerState) => {
     return state.pause
+  },
+  getVolume: (state: PlayerState) => {
+    return state.volume
+  },
+  getDuration: (state: PlayerState) => {
+    return state.duration
+  },
+  getCurrentTime: (state: PlayerState) => {
+    return state.currentTime
+  },
+  getTrack: (state: PlayerState) => {
+    return state.track
   }
 }
 
-const actions: ActionTree = {
+const actions = {
   pause({commit}) {
     commit(PlayerActionTypes.PAUSE)
   },
@@ -27,14 +40,17 @@ const actions: ActionTree = {
   setActive({commit}) {
     commit(PlayerActionTypes.SET_ACTIVE)
   },
-  setCurrenrTime({commit}) {
-    commit(PlayerActionTypes.SET_CURRENT_TIME)
+  setCurrentTime({commit}, payload: number) {
+    commit(PlayerActionTypes.SET_CURRENT_TIME, payload)
   },
-  setDuration({commit}) {
-    commit(PlayerActionTypes.SET_DURATION)
+  setDuration({commit}, payload: number) {
+    commit(PlayerActionTypes.SET_DURATION, payload)
   },
-  setVolume({commit}) {
-    commit(PlayerActionTypes.SET_VOLUME)
+  setVolume({commit}, payload: number) {
+    commit(PlayerActionTypes.SET_VOLUME, payload)
+  },
+  setTrack({commit}, payload: string) {
+    commit(PlayerActionTypes.SET_TRACK, payload)
   }
 }
 
@@ -58,6 +74,9 @@ const mutations = {
   },
   [PlayerActionTypes.SET_VOLUME](state, payload: number) {
     state.volume = payload
+  },
+  [PlayerActionTypes.SET_TRACK](state, payload: string) {
+    state.track = payload
   }
 }
 

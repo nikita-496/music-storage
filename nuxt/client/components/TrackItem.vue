@@ -3,11 +3,11 @@
     <img
       class="track-item__image-state"
       :src="
-        isActive
-          ? require('../assets/images/icons/pause.svg')
-          : require('../assets/images/icons/play.svg')
+        pause
+          ? require('../assets/images/icons/play.svg')
+          : require('../assets/images/icons/pause.svg')
       "
-      :alt="isActive ? 'Приостановить трек' : 'Запустить трек'"
+      :alt="pause ? 'Приостановить трек' : 'Запустить трек'"
       @click="changeTrackState"
     />
     <list class="track-item__list">
@@ -38,22 +38,70 @@
 import List from '../components/List.vue';
 import { Component, mixins, Prop } from 'nuxt-property-decorator';
 import TrackService from '../service/TrackService';
-import playButton from '../mixins/playButton';
+import audioControl from '../mixins/audioControl';
+import { eventBus } from '../eventBus';
 @Component({
-  mixins: [playButton],
+  mixins: [audioControl],
   components: {
     List
   }
 })
-export default class TrackItem extends mixins(playButton) {
+export default class TrackItem extends mixins(audioControl) {
   @Prop(Object) track: object;
-  private isActive: boolean = false;
+
+  mounted() {
+    console.log(`${this.pause} - Монтированный`);
+  }
+  updated() {
+    /* console.log(`${this.pause} - Обнволенный`);
+
+    const rightOperand = this.trackToPlay !== this.track.audio;
+    if (rightOperand) {
+      this.play();
+    }*/
+    //alert(this.trackToPlay);
+  }
+
+  get pause() {
+    if (this.track.audio === this.trackToPlay) {
+      return this.playerPause;
+    }
+    return true;
+  }
+  get trackToPlay() {
+    return this.$store.getters['player/getTrack'];
+  }
+
   public changeTrackState() {
+    this.$store.dispatch('player/setTrack', this.track.audio);
+    this.audioState = `http://localhost:4000/${this.trackToPlay}`;
     this.play();
-    this.isActive = !this.isActive;
   }
   public remove() {
     TrackService.delete(this.track, this.track._id);
+  }
+
+  public setDuration() {
+    this.audioState.onloadedmetadata = () => {
+      this.$store.dispatch(
+        'player/setDuration',
+        Math.ceil(this.audioState.duration)
+      );
+    };
+  }
+  public setCurrentTime() {
+    this.audioState.ontimeupdate = () => {
+      this.$store.dispatch(
+        'player/setCurrentTime',
+        Math.ceil(this.audioState.currentTime)
+      );
+    };
+
+    eventBus.$on('changeTrackState', () => {
+      if (this.trackToPlay === this.track.audio) {
+        this.changeTrackState();
+      }
+    });
   }
 }
 </script>

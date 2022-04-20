@@ -14,18 +14,28 @@
         <img
           class="track-item__image-state"
           :src="
-            playerState
-              ? require('../assets/images/icons/pause.svg')
-              : require('../assets/images/icons/play.svg')
+            playerPause
+              ? require('../assets/images/icons/play.svg')
+              : require('../assets/images/icons/pause.svg')
           "
-          :alt="playerState ? 'Приостановить трек' : 'Запустить трек'"
-          @click="play"
+          :alt="playerPause ? 'Приостановить трек' : 'Запустить трек'"
+          @click="handle"
         />
       </div>
-      <track-progress class="volume__track-progress" :left="0" :right="100" />
+      <track-progress
+        class="volume__track-progress"
+        :left="volume"
+        :right="100"
+        :isVolume="true"
+        @handleVolume="changeVolume"
+      />
     </div>
     <div class="player__control player__control_bottom">
-      <track-progress :left="0" :right="100" />
+      <track-progress
+        :left="currentTime"
+        :right="duration"
+        @handleCurrentTime="changeCurrentTime"
+      />
     </div>
   </div>
 </template>
@@ -33,14 +43,42 @@
 <script lang="ts">
 import TrackProgress from '../components/TrackProgress.vue';
 import { Component, mixins } from 'nuxt-property-decorator';
-import playButton from '../mixins/playButton';
+import audioControl from '../mixins/audioControl';
+import { eventBus } from '../eventBus';
 @Component({
-  mixins: [playButton],
+  mixins: [audioControl],
   components: {
     TrackProgress
   }
 })
-export default class Player extends mixins(playButton) {}
+export default class Player extends mixins(audioControl) {
+  get volume() {
+    return this.$store.getters['player/getVolume'];
+  }
+  get duration() {
+    return this.$store.getters['player/getDuration'];
+  }
+  get currentTime() {
+    return this.$store.getters['player/getCurrentTime'];
+  }
+  get trackToPlay() {
+    return this.$store.getters['player/getTrack'];
+  }
+
+  public changeVolume(ev: any) {
+    const numberEv = Number(ev);
+    eventBus.$emit('changeVolume', numberEv);
+    this.$store.dispatch('player/setVolume', numberEv);
+  }
+  public changeCurrentTime(ev: any) {
+    const numberEv = Number(ev);
+    eventBus.$emit('changeCurrentTime', numberEv);
+    this.$store.dispatch('player/setCurrentTime', numberEv);
+  }
+  public handle() {
+    eventBus.$emit('changeTrackState');
+  }
+}
 </script>
 
 <style lang="scss" scoped>

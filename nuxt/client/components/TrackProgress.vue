@@ -4,8 +4,13 @@
     <input
       class="track-progress__scale"
       type="range"
-      v-model="left"
-      min="left"
+      :value="left"
+      @input="
+        isVolume
+          ? setVolume($event.target.value)
+          : setCurrentTime($event.target.value)
+      "
+      min="leftValue"
       max="right"
     />
     <span>{{ right }}</span>
@@ -13,11 +18,25 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'nuxt-property-decorator';
+import { Component, Vue, Prop, Emit } from 'nuxt-property-decorator';
 @Component
 export default class TrackProgress extends Vue {
+  @Prop(Boolean) isVolume: boolean;
   @Prop(Number) left: number;
   @Prop(Number) right: number;
+
+  public setCurrentTime(ev) {
+    this.onChnangeCurrentTime(ev);
+  }
+
+  public setVolume(ev) {
+    this.onChnangeVolume(ev);
+  }
+
+  @Emit('handleVolume')
+  public onChnangeVolume(val) {}
+  @Emit('handleCurrentTime')
+  public onChnangeCurrentTime(val) {}
 }
 </script>
 
