@@ -33,8 +33,32 @@ export class TrackService {
     return await this.trackModel.findById(trackId);
   }
 
-  async updateTrack(trackId: ObjectId, dto: UpdateTrackDTO): Promise<Track> {
-    return await this.trackModel.findOneAndUpdate({ trackId }, dto);
+  async updateTrack(trackId: ObjectId, dto?: UpdateTrackDTO, picture?): Promise<Track> {
+    console.log(trackId)
+    console.log(picture)
+    if (picture) {
+      const picturePath = this.fileService.createFile(FileType.IMAGE, picture[0]);
+      return await this.trackModel.findOneAndUpdate({ _id: trackId }, {$set: {...dto, picture: picturePath}}, {
+        returnDocument: "after", 
+      },
+      function(err, result){
+        if (!err) {
+          console.log(result)
+        } else {
+          console.error(err)
+        }
+      });
+    }
+    return await this.trackModel.findOneAndUpdate({ _id: trackId }, {$set: {...dto}}, {
+      returnDocument: "after", 
+    },
+    function(err, result){
+      if (!err) {
+        console.log(result)
+      } else {
+        console.error(err)
+      }
+    });
   }
 
   async deleteTrack(trackId: ObjectId): Promise<ObjectId> {

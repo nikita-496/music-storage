@@ -32,7 +32,6 @@ export class ContentController {
     @Body() dto: CreateContentDTO,
     @UploadedFiles() picture
   ): Promise<Content> {
-    console.log(picture)
     return this.contentService.updateContent(contentId, dto, picture)
   }
 
