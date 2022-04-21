@@ -13,6 +13,9 @@ const state: PlayerState = {
 }
 
 const getters = {
+  getActive: (state: PlayerState) => {
+    return state.active
+  },
   isPause: (state: PlayerState) => {
     return state.pause
   },
@@ -37,8 +40,8 @@ const actions = {
   play({commit}) {
     commit(PlayerActionTypes.PLAY)
   },
-  setActive({commit}) {
-    commit(PlayerActionTypes.SET_ACTIVE)
+  setActive ({commit}, payload: ITrack) {
+    commit(PlayerActionTypes.SET_ACTIVE, payload)
   },
   setCurrentTime({commit}, payload: number) {
     commit(PlayerActionTypes.SET_CURRENT_TIME, payload)
@@ -63,8 +66,8 @@ const mutations = {
   },
   [PlayerActionTypes.SET_ACTIVE](state, payload: ITrack) {
     state.active = payload
-    state.duration = 0
-    state.currentTime = 0
+    /*state.duration = 0
+    state.currentTime = 0*/
   },
   [PlayerActionTypes.SET_CURRENT_TIME](state, payload: number) {
     state.currentTime = payload

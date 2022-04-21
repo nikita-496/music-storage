@@ -43,15 +43,15 @@
 <script lang="ts">
 import TrackProgress from '../components/TrackProgress.vue';
 import { Component, mixins } from 'nuxt-property-decorator';
-import audioControl from '../mixins/audioControl';
+import AudioControl from '../mixins/AudioControl';
 import { eventBus } from '../eventBus';
 @Component({
-  mixins: [audioControl],
+  mixins: [AudioControl],
   components: {
     TrackProgress
   }
 })
-export default class Player extends mixins(audioControl) {
+export default class Player extends mixins(AudioControl) {
   get volume() {
     return this.$store.getters['player/getVolume'];
   }

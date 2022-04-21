@@ -3,11 +3,11 @@
     <img
       class="track-item__image-state"
       :src="
-        pause
+        displayTrackStatus()
           ? require('../assets/images/icons/play.svg')
           : require('../assets/images/icons/pause.svg')
       "
-      :alt="pause ? 'Приостановить трек' : 'Запустить трек'"
+      :alt="displayTrackStatus() ? 'Приостановить трек' : 'Запустить трек'"
       @click="changeTrackState"
     />
     <list class="track-item__list">
@@ -38,65 +38,65 @@
 import List from '../components/List.vue';
 import { Component, mixins, Prop } from 'nuxt-property-decorator';
 import TrackService from '../service/TrackService';
-import audioControl from '../mixins/audioControl';
+import AudioControl from '../mixins/AudioControl';
 import { eventBus } from '../eventBus';
 @Component({
-  mixins: [audioControl],
+  mixins: [AudioControl],
   components: {
     List
   }
 })
-export default class TrackItem extends mixins(audioControl) {
+export default class TrackItem extends mixins(AudioControl) {
   @Prop(Object) track: object;
 
-  mounted() {
-    console.log(`${this.pause} - Монтированный`);
-  }
   updated() {
-    /* console.log(`${this.pause} - Обнволенный`);
-
-    const rightOperand = this.trackToPlay !== this.track.audio;
-    if (rightOperand) {
-      this.play();
-    }*/
-    //alert(this.trackToPlay);
+    if (this.trackToPlay !== this.track.audio) {
+      this.audioState.pause();
+    }
   }
 
-  get pause() {
-    if (this.track.audio === this.trackToPlay) {
-      return this.playerPause;
-    }
-    return true;
+  get activeTraack() {
+    return this.$store.getters['player/getActive'];
   }
   get trackToPlay() {
     return this.$store.getters['player/getTrack'];
   }
+  public displayTrackStatus() {
+    if (this.trackToPlay === this.track.audio) {
+      return this.playerPause;
+    } else {
+      return true;
+    }
+  }
 
   public changeTrackState() {
+    this.moveToanotherTrack();
     this.$store.dispatch('player/setTrack', this.track.audio);
-    this.audioState = `http://localhost:4000/${this.trackToPlay}`;
-    this.play();
+    const isActaulTrack = this.trackToPlay === this.track.audio;
+    if (!this.trackToPlay || isActaulTrack) {
+      this.audioState = `http://localhost:4000/${this.trackToPlay}`;
+      this.play(this.audioState, this.playerPause);
+    }
+  }
+  public moveToanotherTrack() {
+    this.$store.dispatch('player/setActive', this.track);
+    const leftOperand = this.activeTraack.audio !== this.trackToPlay;
+    const rightOperand = this.activeTraack && this.trackToPlay;
+    if (leftOperand && rightOperand) {
+      this.play(this.audioState, this.playerPause);
+    }
   }
   public remove() {
     TrackService.delete(this.track, this.track._id);
   }
 
-  public setDuration() {
-    this.audioState.onloadedmetadata = () => {
-      this.$store.dispatch(
-        'player/setDuration',
-        Math.ceil(this.audioState.duration)
-      );
-    };
-  }
-  public setCurrentTime() {
-    this.audioState.ontimeupdate = () => {
-      this.$store.dispatch(
-        'player/setCurrentTime',
-        Math.ceil(this.audioState.currentTime)
-      );
-    };
-
+  public eventBus(audio: HTMLAudioElement) {
+    eventBus.$on('changeVolume', (volume) => {
+      audio.volume = volume / 100;
+    });
+    eventBus.$on('changeCurrentTime', (currentTime) => {
+      audio.currentTime = currentTime;
+    });
     eventBus.$on('changeTrackState', () => {
       if (this.trackToPlay === this.track.audio) {
         this.changeTrackState();
