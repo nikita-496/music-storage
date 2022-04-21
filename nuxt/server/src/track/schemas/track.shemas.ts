@@ -12,6 +12,12 @@ export class Track {
   artist: string;
 
   @Prop()
+  genre: string[]
+
+  @Prop()
+  tag: string[]
+
+  @Prop()
   listens: number;
 
   @Prop()
