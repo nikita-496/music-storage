@@ -25,6 +25,14 @@
         <span class="play-list__content">Новый альбом</span>
       </template>
     </list>
+    <action-button>
+      <a
+        @click="goToUpdate"
+        class="action-button__content action-button__content_none-decoration"
+        slot="text"
+        >Обновить трек</a
+      >
+    </action-button>
     <img
       class="track-item__image-trash"
       src="../assets/images/icons/trash-alt.svg"
@@ -36,6 +44,7 @@
 
 <script lang="ts">
 import List from '../components/List.vue';
+import ActionButton from './ActionButton.vue';
 import { Component, mixins, Prop } from 'nuxt-property-decorator';
 import TrackService from '../service/TrackService';
 import AudioControl from '../mixins/AudioControl';
@@ -43,7 +52,8 @@ import { eventBus } from '../eventBus';
 @Component({
   mixins: [AudioControl],
   components: {
-    List
+    List,
+    ActionButton
   }
 })
 export default class TrackItem extends mixins(AudioControl) {
@@ -70,7 +80,7 @@ export default class TrackItem extends mixins(AudioControl) {
   }
 
   public changeTrackState() {
-    this.moveToanotherTrack();
+    this.moveToAnotherTrack();
     this.$store.dispatch('player/setTrack', this.track.audio);
     const isActaulTrack = this.trackToPlay === this.track.audio;
     if (!this.trackToPlay || isActaulTrack) {
@@ -78,7 +88,7 @@ export default class TrackItem extends mixins(AudioControl) {
       this.play(this.audioState, this.playerPause);
     }
   }
-  public moveToanotherTrack() {
+  public moveToAnotherTrack() {
     this.$store.dispatch('player/setActive', this.track);
     const leftOperand = this.activeTraack.audio !== this.trackToPlay;
     const rightOperand = this.activeTraack && this.trackToPlay;
@@ -102,6 +112,11 @@ export default class TrackItem extends mixins(AudioControl) {
         this.changeTrackState();
       }
     });
+  }
+
+  public goToUpdate() {
+    this.$store.dispatch('track/updateTrack', this.track);
+    this.$router.push('/tracks/create');
   }
 }
 </script>

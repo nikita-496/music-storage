@@ -62,8 +62,22 @@ export type PlayerAction =
   | SetVolumeAction
   | SetTrack
 
+
+//Track
+export interface TrackState {
+  trackToUpdate: null | ITrack 
+}
+export enum TrackActionTypes {
+  SET_TRACK_TO_UPDATE='SET_TRACK_TO_UPDATE',
+}
+interface SetTrackToUpdateAction {
+  type: TrackActionTypes.SET_TRACK_TO_UPDATE
+  payload: ITrack
+}
+
+export type TrackAction = SetTrackToUpdateAction
+
 //Root
 export interface RootState {
   version: string
-  //player: PlayerState 
 }

@@ -9,7 +9,7 @@ const state: PlayerState = {
   duration: 0,
   pause: true,
   volume: 50,
-  track: null
+  track: null,
 }
 
 const getters = {

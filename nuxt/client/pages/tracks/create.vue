@@ -11,6 +11,13 @@
             :value="placeholders[n - 1]"
             @onChangeValue="setTrackData"
           ></app-input>
+          <app-select
+            :genreOptions="options.genres"
+            @onChangeSelected="setGenres"
+          >
+          </app-select>
+          <app-select :tagOptions="options.tags" @onChangeSelected="setTags">
+          </app-select>
         </template>
         <template v-if="activeStep === 2">
           <file-upload
@@ -59,18 +66,55 @@
 import ActionButton from '../../components/ActionButton.vue';
 import FileUpload from '../../components/FileUpload.vue';
 import AppInput from '../../components/input/AppInput.vue';
+import AppSelect from '../../components/input/AppSelect.vue';
 import Stepper from '../../components/Stepper.vue';
 import TrackService from '../../service/TrackService';
+
+import { mapGetters } from 'vuex';
+
 export default {
-  components: { Stepper, ActionButton, AppInput, FileUpload },
+  components: { Stepper, ActionButton, AppInput, FileUpload, AppSelect },
   name: 'create',
   layout: 'publicLayout',
   data() {
     return {
-      track: { name: '', artist: '', album: '', picture: '', audio: '' },
-      activeStep: 1,
-      placeholders: ['Название трека', 'Имя исполнителя', 'Альбом']
+      track: {
+        name: '',
+        artist: '',
+        album: '',
+        genre: [],
+        tag: [],
+        picture: '',
+        audio: ''
+      },
+      placeholders: ['Название трека', 'Имя исполнителя', 'Альбом'],
+      options: {
+        genres: [
+          'Поп',
+          'Металл',
+          'Танцевальная музыка',
+          'Звуки природы',
+          'Советская музыка',
+          'Рок',
+          'Альтернатива',
+          'Реп и хип-хоп',
+          'Классическая музыка',
+          'Электронная музыка'
+        ],
+        tags: ['Новинки', 'Тренды']
+      },
+      activeStep: 1
     };
+  },
+  created() {
+    if (this.getTrackToUdpdate) {
+      this.track = this.getTrackToUdpdate;
+    }
+  },
+  computed: {
+    ...mapGetters({
+      getTrackToUdpdate: 'track/getTrackToUdpdate'
+    })
   },
   methods: {
     increaseStep() {
@@ -89,6 +133,12 @@ export default {
         : (trackKey = 'album');
       this.track[trackKey] = inputValue.val;
     },
+    setGenres(genres) {
+      this.track.genre = genres;
+    },
+    setTags(tags) {
+      this.track.tag = tags;
+    },
     setPicture(file) {
       this.track.picture = file;
     },
@@ -99,9 +149,11 @@ export default {
       const formData = new FormData();
       formData.append('name', this.track.name);
       formData.append('artist', this.track.artist);
+      formData.append('genre', this.track.genre);
+      formData.append('tag', this.track.tag);
       formData.append('picture', this.track.picture);
       formData.append('audio', this.track.audio);
-      TrackService.save(formData);
+      TrackService.save(formData, this.track._id);
     }
   }
 };

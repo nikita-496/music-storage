@@ -44,7 +44,7 @@ import { API, getJson } from '../../service/http';
   components: { ActionButton },
   layout: 'publicLayout'
 })
-export default class ID extends Vue {
+export default class Id extends Vue {
   private receivedTracks: object[] = [];
   mounted() {
     this.track = this.$route.params.id;
