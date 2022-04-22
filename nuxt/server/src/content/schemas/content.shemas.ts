@@ -5,14 +5,17 @@ export type ContentDocument = Content & Document;
 
 @Schema()
 export class Content {
-  @Prop({type: String, required: true})
+  @Prop()
   title: string;
   
-  @Prop({type: Array, required: true})
+  @Prop()
   text: string[];
 
-  @Prop({type: String, required: false})
+  @Prop()
   picture: string;
+
+  @Prop()
+  tag: string[];
 
 }
 

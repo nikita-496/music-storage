@@ -16,6 +16,7 @@ export class ContentService {
   private readonly content: Content;
 
   async createContent(dto: CreateContentDTO, picture?): Promise<Content> {
+
     if (Array.isArray(picture)){
       let picturePaths: string[] = []
       picture.forEach(item => {

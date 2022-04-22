@@ -13,6 +13,7 @@ export class ContentController {
   @UseInterceptors(FilesInterceptor('picture'))
   createContent(@Body() dto: CreateContentDTO, 
   @UploadedFiles() picture): Promise<Content> {
+      console.log(dto)
      return this.contentService.createContent(dto, picture);
   }
 
