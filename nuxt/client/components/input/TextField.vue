@@ -59,6 +59,10 @@
           +
         </button>
       </label>
+      <label class="text-field__input" for="textArea">
+        <br />Категория контента<br />
+        <textarea v-model="tag[0]"></textarea>
+      </label>
     </slot>
   </div>
 </template>
@@ -69,15 +73,20 @@ import { Prop, Component, Vue, Watch, Emit } from 'nuxt-property-decorator';
 export default class TextField extends Vue {
   @Prop(String) createdTitle: string;
   @Prop([]) createdText: string[];
+  @Prop([]) createdTag: string[];
   @Prop([]) textAreas: string[];
   private title: string = '';
   private text: string[] = [''];
+  private tag: string[] = [''];
 
   mounted() {
     this.title = this.createdTitle;
 
     if (this.createdText) {
       this.text = this.createdText;
+    }
+    if (this.createdTag) {
+      this.tag = this.createdTag;
     }
   }
 
@@ -89,11 +98,18 @@ export default class TextField extends Vue {
   textChanged(newVal: string[]) {
     this.onChangeText(newVal);
   }
+  @Watch('tag')
+  tagChanged(newVal: string) {
+    this.onChangeTag(newVal);
+  }
   @Emit('onChangeTitle')
   public onChangeTitle(val: string) {}
 
   @Emit('onChangeText')
   public onChangeText(val: string[]) {}
+
+  @Emit('onChangeTag')
+  public onChangeTag(val: string) {}
 
   @Emit('addTextArea')
   public addTextArea() {}

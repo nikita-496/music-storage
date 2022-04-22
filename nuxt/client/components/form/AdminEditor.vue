@@ -9,6 +9,7 @@
       <create-content
         :createdTitle="content.title"
         :createdText="content.text"
+        :createdTag="content.tag"
         :id="content._id"
       />
     </div>

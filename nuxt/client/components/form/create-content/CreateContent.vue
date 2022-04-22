@@ -3,9 +3,11 @@
     <text-field
       :createdTitle="createdTitle"
       :createdText="createdText"
+      :createdTag="createdTag"
       :textAreas="textAreas"
       @onChangeTitle="setTitle"
       @onChangeText="setText"
+      @onChangeTag="setTag"
       @addTextArea="setTextArea"
       @removeTextArea="delTextArea"
       @sendFile="setFile"
@@ -33,6 +35,7 @@ import {
 export default class CreateContent extends Vue {
   @Prop(String) createdTitle: string;
   @Prop() createdText: string[];
+  @Prop() createdTag: string[];
   @Prop(String) id: string;
   private content: IContent = {
     title: '',
@@ -81,6 +84,10 @@ export default class CreateContent extends Vue {
   }
   public setText(text: string[]) {
     this.content.text = text;
+  }
+
+  public setTag(tag: string[]) {
+    this.content.tag = tag;
   }
   public setFile(file: {}) {
     this.content.picture.push(file);
@@ -133,6 +140,7 @@ export default class CreateContent extends Vue {
     const formData = new FormData();
     formData.append('title', this.content.title);
     this.content.text.forEach((text) => formData.append('text', text));
+    this.content.tag.forEach((tag) => formData.append('tag', tag));
     this.content.picture.forEach((file) => formData.append('picture', file));
     ContentService.save(formData, this.id).then((res: any) => {
       new TextAreas(localStorage).rewriteValueKey(res.data._id, this.textAreas);
@@ -142,6 +150,7 @@ export default class CreateContent extends Vue {
     const formData = new FormData();
     formData.append('title', this.content.title);
     formData.append('text', this.content.text);
+    formData.append('tag', this.content.tag);
     formData.append('picture', this.content.picture);
     ContentService.delete(formData, this.id);
   }
