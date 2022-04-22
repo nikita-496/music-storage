@@ -10,37 +10,18 @@
 </template>
 
 <script lang="ts">
-import TrackList from '../../components/TrackList.vue';
-import { Component, Vue } from 'nuxt-property-decorator';
-import { API, getJson } from '../../service/http';
+import { Component, mixins } from 'nuxt-property-decorator';
+import Tracks from '../../mixins/trackList/Tracks';
+
 @Component({
-  async asyncData() {
-    let receivedTracks;
-    try {
-      await getJson(API.track).then((res) => {
-        receivedTracks = res.data;
-      });
-      console.log(receivedTracks);
-    } catch (e) {
-      console.log(e);
-    }
-    return {
-      receivedTracks
-    };
-  },
-  layout: 'publicLayout',
-  components: {
-    TrackList
-  }
+  mixins: [Tracks]
 })
-export default class Index extends Vue {
-  private receivedTracks: object[] = [];
-}
+export default class Index extends mixins(Tracks) {}
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/scss/_vars.scss';
+/*@import '../../assets/scss/_vars.scss';
 .card-tracks {
   background-color: $white;
-}
+}*/
 </style>

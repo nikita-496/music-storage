@@ -35,4 +35,7 @@ p{
   height: 25px;
   cursor: pointer;
 }
+.card-tracks {
+  background-color: $white;
+}
 @include mainFontSize();

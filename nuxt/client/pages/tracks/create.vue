@@ -94,6 +94,8 @@ export default {
           'Металл',
           'Танцевальная музыка',
           'Звуки природы',
+          'Зарубежная музыка',
+          'Русская музыка',
           'Советская музыка',
           'Рок',
           'Альтернатива',
@@ -118,6 +120,10 @@ export default {
   },
   methods: {
     increaseStep() {
+      if (this.activeStep === 2 && typeof this.track.picture === 'string') {
+        alert('Загрузите обложку');
+        return;
+      }
       this.activeStep++;
     },
     decreaseStep() {
@@ -149,8 +155,8 @@ export default {
       const formData = new FormData();
       formData.append('name', this.track.name);
       formData.append('artist', this.track.artist);
-      formData.append('genre', this.track.genre);
-      formData.append('tag', this.track.tag);
+      this.track.genre.forEach((genre) => formData.append('genre', genre));
+      this.track.tag.forEach((tag) => formData.append('tag', tag));
       formData.append('picture', this.track.picture);
       formData.append('audio', this.track.audio);
       TrackService.save(formData, this.track._id);

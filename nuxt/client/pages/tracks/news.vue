@@ -2,7 +2,7 @@
   <main class="main">
     <div class="container">
       <div class="card-tracks">
-        <h2 class="title">Тренды</h2>
+        <h2 class="title">Новинки {{ new Date().getFullYear() }}</h2>
         <track-list :tracks="tracks" />
       </div>
     </div>
@@ -17,7 +17,7 @@ import Tracks from '../../mixins/trackList/Tracks';
 })
 export default class Trends extends mixins(Tracks) {
   mounted() {
-    this.tracks = 'Тренды';
+    this.tracks = 'Новинки';
   }
 }
 </script>

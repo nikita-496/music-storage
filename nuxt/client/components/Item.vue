@@ -5,7 +5,15 @@
         <NuxtLink
           v-show="isVisible"
           class="item__link"
-          :to="text === 'Создание контента' ? '/admin' : '/'"
+          :to="
+            text === 'Создание контента'
+              ? '/admin'
+              : text === 'Тренды'
+              ? '/tracks/trends'
+              : text === 'Новинки'
+              ? '/tracks/news'
+              : '/'
+          "
         >
           {{ text }}
         </NuxtLink>
