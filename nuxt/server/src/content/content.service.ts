@@ -16,14 +16,13 @@ export class ContentService {
   private readonly content: Content;
 
   async createContent(dto: CreateContentDTO, picture?): Promise<Content> {
-
     if (Array.isArray(picture)){
       let picturePaths: string[] = []
       picture.forEach(item => {
         const picturePath = this.fileService.createFile(FileType.IMAGE, item)
         picturePaths.push(picturePath)
       })
-      return this.contentModel.create({...dto, picture: JSON.stringify(picturePaths)})
+      return this.contentModel.create({...dto, picture: picturePaths})
     }else{
       return this.contentModel.create({...dto})
     }
@@ -41,9 +40,10 @@ export class ContentService {
   let picturePaths: string[] = []
       picture.forEach(item => {
         const picturePath = this.fileService.createFile(FileType.IMAGE, item)
+        console.log(picturePath)
         picturePaths.push(picturePath)
       })
-    return await this.contentModel.findOneAndUpdate({_id: contentId}, {$set: {...dto, picture: JSON.stringify(picturePaths)}}, {
+    return await this.contentModel.findOneAndUpdate({_id: contentId}, {$set: {...dto, picture:picturePaths}}, {
       returnDocument: "after",
     },
     function(err, result){

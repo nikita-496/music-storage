@@ -17,7 +17,14 @@ class ContenService {
   static delete(contentData: object, id: string) {
     deleteJson(`${API.content}/${id}`, contentData)
   }
-}
+
+  static filterContent(target: object[], criterion: string) {
+    const copy = target.filter((item) => {
+      return item.tag.includes(criterion);
+    });
+    return copy;
+  }
+  }
 
 
 export default ContenService

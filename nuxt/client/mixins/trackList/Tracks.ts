@@ -9,7 +9,6 @@ import TrackList from '../../components/TrackList.vue';
       await getJson(API.track).then((res) => {
         receivedTracks = res.data;
       });
-      console.log(receivedTracks);
     } catch (e) {
       console.error(e);
     }
@@ -36,7 +35,6 @@ export default class Tracks extends Vue {
   public filterTracks(criterion: string) {
     const copy = this.receivedTracks.filter(track => track.tag.includes(criterion)
     ) 
-    console.log(copy)
     return copy
   }
 }

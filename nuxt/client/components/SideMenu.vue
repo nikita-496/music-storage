@@ -25,7 +25,7 @@
               <li class="list__items">
                 <item
                   :paragraphs="content.text"
-                  :pictures="JSON.parse(content.picture)"
+                  :pictures="content.picture"
                 ></item>
               </li>
             </template>

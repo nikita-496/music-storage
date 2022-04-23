@@ -5,7 +5,7 @@
     </header>
     <side-menu
       class="menu"
-      :contents="receivedСontent"
+      :contents="sideBarСontent"
       :isOpen="isOpen"
       @changeSidebar="changeStatus"
     />
@@ -35,10 +35,17 @@ import { eventBus } from '../eventBus';
   }
 })
 export default class PublicLayout extends Vue {
-  private receivedСontent: [] = [];
+  private sideBarСontent: object[] = [];
   private isOpen: boolean = true;
+
   mounted() {
-    ContenService.get().then((r) => (this.receivedСontent = r.data.reverse()));
+    ContenService.get().then((r) => {
+      const target = r.data.reverse();
+      this.sideBarСontent = ContenService.filterContent(
+        target,
+        'Боковая панель меню'
+      );
+    });
   }
   public changeStatus(value) {
     this.isOpen = value;

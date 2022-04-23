@@ -12,7 +12,7 @@ export class Content {
   text: string[];
 
   @Prop()
-  picture: string;
+  picture: string[];
 
   @Prop()
   tag: string[];
